@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito | AutoParts Store</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="logo">🔥 AutoParts Store</div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Busca más autopartes desde el inicio">
+      <button type="button" onclick="window.location.href='index.html'">Ir al inicio</button>
+    </div>
+
+    <nav>
+      <a href="index.html#productos">Productos</a>
+      <a href="login.html">Iniciar sesión</a>
+      <a href="register.html">Registrarte</a>
+      <a href="address.html">Dirección</a>
+      <a href="index.html#contacto">Contacto</a>
+      <a href="cart.html">Carrito <span id="cartCount" class="cart-badge">0</span></a>
+    </nav>
+  </header>
+
+  <main class="cart-section">
+    <section class="cart-panel">
+      <h2 class="section-title" style="margin-bottom: 10px;">Tu carrito</h2>
+
+      <div id="cartItems"></div>
+
+      <div class="cart-total">
+        Total: <span id="cartTotal">$0</span>
+      </div>
+
+      <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="index.html" class="secondary-btn" style="text-align:center; text-decoration:none;">
+          Seguir comprando
+        </a>
+        <a href="address.html" class="primary-btn" style="text-align:center; text-decoration:none;">
+          Continuar compra
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h3>Autopartes Store</h3>
+        <p>Tu carrito guarda los productos seleccionados dentro del navegador para continuar con tu compra.</p>
+      </div>
+
+      <div>
+        <h3>Contacto</h3>
+        <p>Correo: autopartesstore@gmail.com</p>
+        <p>Teléfono: 55 1234 5678</p>
+        <p>WhatsApp: 55 9876 5432</p>
+      </div>
+
+      <div>
+        <h3>Ubicación</h3>
+        <p>Ecatepec de Morelos, Estado de México</p>
+        <p>Horario: Lunes a Sábado, 9:00 am a 7:00 pm</p>
+      </div>
+    </div>
+
+    <div class="footer-copy">
+      © 2026 AutoParts Store | Proyecto en GitHub Pages
+    </div>
+  </footer>
+
+  <script src="products.js"></script>
+  <script src="product.js"></script>
+</body>
+</html>
