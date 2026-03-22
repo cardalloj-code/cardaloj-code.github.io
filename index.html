@@ -2,26 +2,326 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Autopartes Store</title>
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#eaeded;
+      color:#111;
+    }
+
+    header{
+      background:#131921;
+      color:white;
+      padding:12px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+
+    .logo{
+      font-size:28px;
+      font-weight:bold;
+    }
+
+    .search{
+      flex:1;
+      min-width:220px;
+      max-width:500px;
+      display:flex;
+    }
+
+    .search input{
+      width:100%;
+      padding:10px;
+      border:none;
+      outline:none;
+      border-radius:6px 0 0 6px;
+    }
+
+    .search button{
+      padding:10px 16px;
+      border:none;
+      background:#febd69;
+      cursor:pointer;
+      border-radius:0 6px 6px 0;
+      font-weight:bold;
+    }
+
+    nav{
+      display:flex;
+      gap:15px;
+      flex-wrap:wrap;
+    }
+
+    nav a{
+      color:white;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .hero{
+      background:linear-gradient(to right, #232f3e, #37475a);
+      color:white;
+      text-align:center;
+      padding:40px 20px;
+    }
+
+    .hero h1{
+      font-size:42px;
+      margin-bottom:10px;
+    }
+
+    .hero p{
+      font-size:18px;
+    }
+
+    .container{
+      width:95%;
+      max-width:1300px;
+      margin:30px auto;
+    }
+
+    .section-title{
+      font-size:28px;
+      margin-bottom:20px;
+    }
+
+    .products{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+      gap:20px;
+    }
+
+    .card{
+      background:white;
+      border-radius:10px;
+      padding:16px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+      transition:0.2s;
+    }
+
+    .card:hover{
+      transform:translateY(-4px);
+    }
+
+    .card img{
+      width:100%;
+      height:200px;
+      object-fit:cover;
+      border-radius:8px;
+      margin-bottom:12px;
+    }
+
+    .card h3{
+      margin-bottom:8px;
+      font-size:22px;
+    }
+
+    .price{
+      font-size:22px;
+      color:#b12704;
+      font-weight:bold;
+      margin:10px 0;
+    }
+
+    .stars{
+      color:#f0ad4e;
+      margin-bottom:10px;
+      font-size:18px;
+    }
+
+    .card button{
+      width:100%;
+      padding:10px;
+      border:none;
+      background:#ffd814;
+      border-radius:20px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+      gap:20px;
+      margin-top:35px;
+    }
+
+    .panel{
+      background:white;
+      border-radius:10px;
+      padding:20px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .panel h2{
+      margin-bottom:15px;
+    }
+
+    .panel input, .panel textarea, .panel select{
+      width:100%;
+      padding:10px;
+      margin-bottom:10px;
+      border:1px solid #ccc;
+      border-radius:6px;
+    }
+
+    .panel button{
+      width:100%;
+      padding:10px;
+      border:none;
+      background:#ff9900;
+      color:white;
+      border-radius:6px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    .review{
+      background:#f8f8f8;
+      padding:12px;
+      border-left:4px solid #ff9900;
+      border-radius:6px;
+      margin-top:10px;
+    }
+
+    footer{
+      margin-top:40px;
+      background:#131921;
+      color:white;
+      text-align:center;
+      padding:20px;
+    }
+  </style>
 </head>
-<body style="font-family: Arial; text-align:center;">
+<body>
 
-  <h1>🚗 Autopartes Store</h1>
-  <p>Bienvenido a tu tienda</p>
+  <header>
+    <div class="logo">🚗 Autopartes Store</div>
 
-  <h2>Productos</h2>
+    <div class="search">
+      <input type="text" placeholder="Buscar autopartes...">
+      <button>Buscar</button>
+    </div>
 
-  <div>
-    <h3>Faros LED</h3>
-    <p>$2500</p>
-    <button>Comprar</button>
+    <nav>
+      <a href="#productos">Productos</a>
+      <a href="#login">Iniciar sesión</a>
+      <a href="#registro">Registrarte</a>
+      <a href="#direccion">Dirección</a>
+      <a href="#comentarios">Comentarios</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Tu tienda de autopartes</h1>
+    <p>Faros, parrillas, alerones, accesorios y mucho más</p>
+  </section>
+
+  <div class="container">
+    <h2 class="section-title" id="productos">Productos destacados</h2>
+
+    <div class="products">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1613214150384-1f3b97c6f1f5?auto=format&fit=crop&w=800&q=80" alt="Faros LED">
+        <h3>Faros LED</h3>
+        <div class="stars">★★★★☆</div>
+        <p>Iluminación moderna y deportiva para tu auto.</p>
+        <div class="price">$2500</div>
+        <button>Agregar al carrito</button>
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80" alt="Parrilla frontal">
+        <h3>Parrilla frontal</h3>
+        <div class="stars">★★★★★</div>
+        <p>Diseño elegante y resistente para renovar tu vehículo.</p>
+        <div class="price">$1800</div>
+        <button>Agregar al carrito</button>
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800&q=80" alt="Alerón deportivo">
+        <h3>Alerón deportivo</h3>
+        <div class="stars">★★★★☆</div>
+        <p>Mejora la apariencia de tu auto con un estilo deportivo.</p>
+        <div class="price">$3200</div>
+        <button>Agregar al carrito</button>
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1486496572940-2bb2341fdbdf?auto=format&fit=crop&w=800&q=80" alt="Faros de niebla">
+        <h3>Faros de niebla</h3>
+        <div class="stars">★★★★☆</div>
+        <p>Mayor visibilidad en condiciones de lluvia o neblina.</p>
+        <div class="price">$1400</div>
+        <button>Agregar al carrito</button>
+      </div>
+    </div>
+
+    <div class="info-grid">
+      <div class="panel" id="login">
+        <h2>Iniciar sesión</h2>
+        <input type="email" placeholder="Correo electrónico">
+        <input type="password" placeholder="Contraseña">
+        <button>Entrar</button>
+      </div>
+
+      <div class="panel" id="registro">
+        <h2>Registrarte</h2>
+        <input type="text" placeholder="Nombre completo">
+        <input type="email" placeholder="Correo electrónico">
+        <input type="tel" placeholder="Número de celular">
+        <input type="password" placeholder="Contraseña">
+        <button>Crear cuenta</button>
+      </div>
+
+      <div class="panel" id="direccion">
+        <h2>Dirección de envío</h2>
+        <input type="text" placeholder="Calle y número">
+        <input type="text" placeholder="Colonia">
+        <input type="text" placeholder="Ciudad">
+        <input type="text" placeholder="Estado">
+        <input type="text" placeholder="Código postal">
+        <button>Guardar dirección</button>
+      </div>
+
+      <div class="panel" id="comentarios">
+        <h2>Comentarios del producto</h2>
+        <input type="text" placeholder="Tu nombre">
+        <select>
+          <option>5 estrellas</option>
+          <option>4 estrellas</option>
+          <option>3 estrellas</option>
+          <option>2 estrellas</option>
+          <option>1 estrella</option>
+        </select>
+        <textarea placeholder="Escribe tu comentario"></textarea>
+        <button>Publicar comentario</button>
+
+        <div class="review">
+          <strong>Carlos:</strong> Muy buen producto, excelente calidad.
+        </div>
+        <div class="review">
+          <strong>Ana:</strong> Me gustó mucho la parrilla, quedó perfecta.
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div>
-    <h3>Parrilla frontal</h3>
-    <p>$1800</p>
-    <button>Comprar</button>
-  </div>
+  <footer>
+    <p>© 2026 Autopartes Store - Proyecto escolar en GitHub Pages</p>
+  </footer>
 
 </body>
 </html>
