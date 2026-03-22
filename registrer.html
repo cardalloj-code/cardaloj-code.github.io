@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrarte</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">🔥 AutoParts Store</div>
+    <div class="search-bar">
+      <input type="text" placeholder="Buscar autopartes...">
+      <button type="button" onclick="window.location.href='index.html'">Inicio</button>
+    </div>
+    <nav>
+      <a href="index.html#productos">Productos</a>
+      <a href="login.html">Iniciar sesión</a>
+      <a href="register.html">Registrarte</a>
+      <a href="address.html">Dirección</a>
+      <a href="cart.html">Carrito <span id="cartCount" class="cart-badge">0</span></a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="panel" style="max-width:650px; margin:40px auto;">
+      <h2>Registrarte</h2>
+      <input data-save="register_name" type="text" placeholder="Nombre completo">
+      <input data-save="register_email" type="email" placeholder="Correo electrónico">
+      <input data-save="register_phone" type="tel" placeholder="Número de celular">
+      <input data-save="register_password" type="password" placeholder="Contraseña">
+      <button type="button">Crear cuenta</button>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-copy">© 2026 AutoParts Store</div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
