@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del producto</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="logo">🔥 AutoParts Store</div>
+    <div class="search-bar">
+      <input type="text" placeholder="Busca más autopartes desde el inicio">
+      <button type="button" onclick="window.location.href='index.html'">Ir al inicio</button>
+    </div>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="index.html#productos">Productos</a>
+      <a href="index.html#contacto">Contacto</a>
+      <a href="#cartBox">Carrito <span id="cartCount" class="cart-badge">0</span></a>
+    </nav>
+  </header>
+
+  <main class="product-page">
+    <section id="productContainer"></section>
+
+    <section class="cart-section cart-panel" id="cartBox" style="margin-top:30px;">
+      <h2 class="section-title" style="margin-bottom:10px;">Tu carrito</h2>
+      <div id="cartItems"></div>
+      <div class="cart-total">Total: <span id="cartTotal">$0</span></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h3>Autopartes Store</h3>
+        <p>Detalles completos del producto, medidas, compatibilidad y opiniones de compradores.</p>
+      </div>
+      <div>
+        <h3>Contacto</h3>
+        <p>Correo: autopartesstore@gmail.com</p>
+        <p>Teléfono: 55 1234 5678</p>
+        <p>WhatsApp: 55 9876 5432</p>
+      </div>
+      <div>
+        <h3>Ubicación</h3>
+        <p>Ecatepec de Morelos, Estado de México</p>
+        <p>Horario: Lunes a Sábado, 9:00 am a 7:00 pm</p>
+      </div>
+    </div>
+    <div class="footer-copy">© 2026 AutoParts Store | Proyecto en GitHub Pages</div>
+  </footer>
+
+  <script src="products.js"></script>
+  <script src="product.js"></script>
+</body>
+</html>
