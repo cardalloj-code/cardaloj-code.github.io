@@ -14,9 +14,11 @@ function saveStoredReviews(productId, reviews) {
 function starsFromRating(rating) {
   const rounded = Math.round(rating);
   let stars = "";
+
   for (let i = 1; i <= 5; i++) {
     stars += i <= rounded ? "★" : "☆";
   }
+
   return stars;
 }
 
@@ -33,6 +35,7 @@ function saveCart(cart) {
 function updateCartCount() {
   const cartCount = document.getElementById("cartCount");
   if (!cartCount) return;
+
   const cart = getCart();
   cartCount.textContent = cart.reduce((acc, item) => acc + item.quantity, 0);
 }
@@ -49,7 +52,7 @@ function addToCart(product, quantity) {
       name: product.name,
       price: product.price,
       image: product.image,
-      quantity
+      quantity: quantity
     });
   }
 
@@ -58,13 +61,14 @@ function addToCart(product, quantity) {
 }
 
 function removeFromCart(id) {
-  let cart = getCart().filter(item => item.id !== id);
+  const cart = getCart().filter(item => item.id !== id);
   saveCart(cart);
 }
 
 function renderCart() {
   const cartList = document.getElementById("cartItems");
   const totalElement = document.getElementById("cartTotal");
+
   if (!cartList || !totalElement) return;
 
   const cart = getCart();
@@ -99,8 +103,16 @@ function renderProduct() {
   const product = PRODUCTS.find(p => p.id === productId);
   const container = document.getElementById("productContainer");
 
+  if (!container) return;
+
   if (!product) {
-    container.innerHTML = "<p>Producto no encontrado.</p>";
+    container.innerHTML = `
+      <div class="panel">
+        <h2>Producto no encontrado</h2>
+        <p>El producto que intentaste abrir no existe.</p>
+        <a class="small-btn" href="index.html">Volver al inicio</a>
+      </div>
+    `;
     return;
   }
 
@@ -128,13 +140,13 @@ function renderProduct() {
         </ul>
 
         <div class="qty">
-          <button id="minusQty">-</button>
+          <button id="minusQty" type="button">-</button>
           <span id="qtyValue">1</span>
-          <button id="plusQty">+</button>
+          <button id="plusQty" type="button">+</button>
         </div>
 
         <div class="product-actions">
-          <button class="primary-btn" id="addCartBtn">Agregar al carrito</button>
+          <button class="primary-btn" id="addCartBtn" type="button">Agregar al carrito</button>
           <a class="secondary-btn" href="index.html">Volver al inicio</a>
         </div>
       </div>
@@ -142,6 +154,7 @@ function renderProduct() {
 
     <div class="review-section" style="margin-top:28px;">
       <h2 class="section-title" style="margin-bottom:18px;">Opiniones de compradores</h2>
+
       <div class="review-grid" id="reviewList">
         ${allReviews.map(r => `
           <div class="review">
@@ -170,10 +183,12 @@ function renderProduct() {
 
   let qty = 1;
   const qtyValue = document.getElementById("qtyValue");
+
   document.getElementById("minusQty").addEventListener("click", () => {
     if (qty > 1) qty--;
     qtyValue.textContent = qty;
   });
+
   document.getElementById("plusQty").addEventListener("click", () => {
     qty++;
     qtyValue.textContent = qty;
@@ -185,6 +200,7 @@ function renderProduct() {
 
   document.getElementById("reviewForm").addEventListener("submit", (e) => {
     e.preventDefault();
+
     const name = document.getElementById("reviewName").value.trim();
     const stars = Number(document.getElementById("reviewStars").value);
     const comment = document.getElementById("reviewComment").value.trim();
@@ -194,6 +210,7 @@ function renderProduct() {
     const stored = getStoredReviews(productId);
     stored.unshift({ name, stars, comment });
     saveStoredReviews(productId, stored);
+
     renderProduct();
   });
 }
