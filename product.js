@@ -75,7 +75,7 @@ function renderCart() {
 
   if (cart.length === 0) {
     cartList.innerHTML = `<div class="empty">Tu carrito está vacío.</div>`;
-    totalElement.textContent = "$0";
+    totalElement.textContent = "$0 MXN";
     return;
   }
 
@@ -85,17 +85,17 @@ function renderCart() {
       <div>
         <h3>${item.name}</h3>
         <p>Cantidad: ${item.quantity}</p>
-        <p>Precio unitario: $${item.price}</p>
+        <p>Precio unitario: $${item.price} MXN</p>
       </div>
       <div>
-        <p><strong>$${item.price * item.quantity}</strong></p>
+        <p><strong>$${item.price * item.quantity} MXN</strong></p>
         <button class="secondary-btn" onclick="removeFromCart(${item.id})">Eliminar</button>
       </div>
     </div>
   `).join("");
 
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  totalElement.textContent = `$${total}`;
+  totalElement.textContent = `$${total} MXN`;
 }
 
 function renderProduct() {
@@ -129,7 +129,7 @@ function renderProduct() {
         <div class="meta">${product.category}</div>
         <h1>${product.name}</h1>
         <div class="stars">${starsFromRating(product.rating)} (${product.rating})</div>
-        <div class="price">$${product.price}</div>
+        <div class="price">$${product.price} MXN</div>
 
         <p>${product.description}</p>
 
