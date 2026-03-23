@@ -19,11 +19,9 @@ function updateCartCount() {
 function starsFromRating(rating) {
   const rounded = Math.round(rating);
   let stars = "";
-
   for (let i = 1; i <= 5; i++) {
     stars += i <= rounded ? "★" : "☆";
   }
-
   return stars;
 }
 
@@ -52,6 +50,43 @@ function addToCart(productId, quantity = 1) {
   alert("Producto agregado al carrito");
 }
 
+function createCard(product) {
+  return `
+    <div class="card">
+      <img src="${product.image}" alt="${product.name}">
+      <div class="card-content">
+        <div class="meta">${product.category}</div>
+        <h3>${product.name}</h3>
+        <div class="stars">${starsFromRating(product.rating)}</div>
+        <p>${product.shortDescription}</p>
+        <div class="meta">Medidas: ${product.measures}</div>
+        <div class="price">$${product.price}</div>
+        <div class="actions">
+          <button onclick="addToCart(${product.id})">Agregar al carrito</button>
+          <a class="small-btn" href="product.html?id=${product.id}">Ver producto</a>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderFeaturedProducts() {
+  const container = document.getElementById("featuredProductsContainer");
+  if (!container || typeof PRODUCTS === "undefined") return;
+
+  const seen = new Set();
+  const featured = [];
+
+  PRODUCTS.forEach(product => {
+    if (!seen.has(product.category + "_" + product.name.split(" para ")[0])) {
+      seen.add(product.category + "_" + product.name.split(" para ")[0]);
+      featured.push(product);
+    }
+  });
+
+  container.innerHTML = featured.map(createCard).join("");
+}
+
 function renderProducts(list) {
   const container = document.getElementById("productsContainer");
   if (!container) return;
@@ -66,24 +101,7 @@ function renderProducts(list) {
     return;
   }
 
-  container.innerHTML = list.map(product => `
-    <div class="card">
-      <img src="${product.image}" alt="${product.name}">
-      <div class="card-content">
-        <div class="meta">${product.category}</div>
-        <h3>${product.name}</h3>
-        <div class="stars">${starsFromRating(product.rating)}</div>
-        <p>${product.shortDescription}</p>
-        <div class="meta">Medidas: ${product.measures}</div>
-        <div class="price">$${product.price}</div>
-
-        <div class="actions">
-          <button onclick="addToCart(${product.id})">Agregar al carrito</button>
-          <a class="small-btn" href="product.html?id=${product.id}">Ver producto</a>
-        </div>
-      </div>
-    </div>
-  `).join("");
+  container.innerHTML = list.map(createCard).join("");
 }
 
 function setupSearch() {
@@ -106,11 +124,9 @@ function setupSearch() {
 
 function saveFormData() {
   const fields = document.querySelectorAll("[data-save]");
-
   fields.forEach(field => {
     const key = field.getAttribute("data-save");
     field.value = localStorage.getItem(key) || "";
-
     field.addEventListener("input", () => {
       localStorage.setItem(key, field.value);
     });
@@ -120,7 +136,6 @@ function saveFormData() {
 function setupReviewFormHome() {
   const form = document.getElementById("homeReviewForm");
   const list = document.getElementById("homeReviewList");
-
   if (!form || !list) return;
 
   form.addEventListener("submit", (e) => {
@@ -143,6 +158,7 @@ function setupReviewFormHome() {
 
 document.addEventListener("DOMContentLoaded", () => {
   if (typeof PRODUCTS !== "undefined") {
+    renderFeaturedProducts();
     renderProducts(PRODUCTS);
     setupSearch();
   }
