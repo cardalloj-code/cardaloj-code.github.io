@@ -1,4 +1,4 @@
-function getCart() {
+  function getCart() {
   return JSON.parse(localStorage.getItem("cart")) || [];
 }
 
@@ -60,7 +60,7 @@ function createCard(product) {
         <div class="stars">${starsFromRating(product.rating)}</div>
         <p>${product.shortDescription}</p>
         <div class="meta">Medidas: ${product.measures}</div>
-        <div class="price">$${product.price}</div>
+        <div class="price">$${product.price} MXN</div>
         <div class="actions">
           <button onclick="addToCart(${product.id})">Agregar al carrito</button>
           <a class="small-btn" href="product.html?id=${product.id}">Ver producto</a>
@@ -78,8 +78,9 @@ function renderFeaturedProducts() {
   const featured = [];
 
   PRODUCTS.forEach(product => {
-    if (!seen.has(product.category + "_" + product.name.split(" para ")[0])) {
-      seen.add(product.category + "_" + product.name.split(" para ")[0]);
+    const productType = product.name.split(" para ")[0];
+    if (!seen.has(productType)) {
+      seen.add(productType);
       featured.push(product);
     }
   });
@@ -127,6 +128,7 @@ function saveFormData() {
   fields.forEach(field => {
     const key = field.getAttribute("data-save");
     field.value = localStorage.getItem(key) || "";
+
     field.addEventListener("input", () => {
       localStorage.setItem(key, field.value);
     });
