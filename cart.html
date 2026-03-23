@@ -26,25 +26,41 @@
     </nav>
   </header>
 
-  <main class="cart-section">
-    <section class="cart-panel">
-      <h2 class="section-title" style="margin-bottom: 10px;">Tu carrito</h2>
+  <main class="container">
+    <h2 class="section-title" style="margin-bottom: 25px;">Tu carrito de compras</h2>
 
-      <div id="cartItems"></div>
+    <div class="product-layout">
+      <section class="panel">
+        <h2 style="margin-bottom: 15px;">Productos agregados</h2>
+        <div id="cartItems"></div>
+      </section>
 
-      <div class="cart-total">
-        Total: <span id="cartTotal">$0</span>
-      </div>
+      <aside class="panel">
+        <h2 style="margin-bottom: 15px;">Resumen de compra</h2>
 
-      <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
-        <a href="index.html" class="secondary-btn" style="text-align:center; text-decoration:none;">
-          Seguir comprando
-        </a>
-        <a href="address.html" class="primary-btn" style="text-align:center; text-decoration:none;">
-          Continuar compra
-        </a>
-      </div>
-    </section>
+        <p style="margin-bottom: 10px; color: #d0d0d0;">
+          Revisa los productos seleccionados antes de continuar al pago.
+        </p>
+
+        <div class="cart-total">
+          Total: <span id="cartTotal">$0</span>
+        </div>
+
+        <div style="margin-top: 20px; display: grid; gap: 12px;">
+          <a href="checkout.html" class="primary-btn" style="text-align:center;">
+            Proceder al pago
+          </a>
+
+          <a href="index.html" class="secondary-btn" style="text-align:center;">
+            Seguir comprando
+          </a>
+
+          <button type="button" class="secondary-btn" onclick="clearCart()">
+            Vaciar carrito
+          </button>
+        </div>
+      </aside>
+    </div>
   </main>
 
   <footer>
@@ -75,5 +91,14 @@
 
   <script src="products.js"></script>
   <script src="product.js"></script>
+
+  <script>
+    function clearCart() {
+      localStorage.removeItem("cart");
+      renderCart();
+      updateCartCount();
+      alert("El carrito ha sido vaciado.");
+    }
+  </script>
 </body>
 </html>
