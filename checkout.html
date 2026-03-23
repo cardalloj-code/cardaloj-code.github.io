@@ -1,64 +1,87 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pagar</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagar | AutoParts Store</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header>
-  <div class="logo">🔥 AutoParts Store</div>
-  <nav>
-    <a href="index.html">Inicio</a>
-    <a href="cart.html">Carrito</a>
-  </nav>
-</header>
+  <header>
+    <div class="logo">🔥 AutoParts Store</div>
 
-<main class="container">
-
-  <h2 class="section-title">Pago con tarjeta</h2>
-
-  <div class="product-layout">
-
-    <!-- FORM -->
-    <div class="panel">
-      <h2>Datos de tarjeta</h2>
-
-      <input type="text" placeholder="Nombre en la tarjeta">
-      <input type="text" placeholder="Número de tarjeta (16 dígitos)">
-      <input type="text" placeholder="Fecha de expiración (MM/AA)">
-      <input type="text" placeholder="CVV">
-
-      <button onclick="pay()">Pagar ahora</button>
+    <div class="search-bar">
+      <input type="text" placeholder="Busca más autopartes desde el inicio">
+      <button type="button" onclick="window.location.href='index.html'">Ir al inicio</button>
     </div>
 
-    <!-- RESUMEN -->
-    <div class="panel">
-      <h2>Resumen</h2>
-      <div id="cartItems"></div>
-      <div class="cart-total">Total: <span id="cartTotal">$0</span></div>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="cart.html">Carrito <span id="cartCount" class="cart-badge">0</span></a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2 class="section-title" style="margin-bottom: 25px;">Pago con tarjeta</h2>
+
+    <div class="product-layout">
+      <section class="panel">
+        <h2 style="margin-bottom: 15px;">Datos de la tarjeta</h2>
+
+        <input type="text" placeholder="Nombre en la tarjeta">
+        <input type="text" placeholder="Número de tarjeta (16 dígitos)">
+        <input type="text" placeholder="Fecha de expiración (MM/AA)">
+        <input type="text" placeholder="CVV">
+
+        <button type="button" onclick="payNow()">Pagar ahora</button>
+      </section>
+
+      <aside class="panel">
+        <h2 style="margin-bottom: 15px;">Resumen de compra</h2>
+        <div id="cartItems"></div>
+        <div class="cart-total">Total: <span id="cartTotal">$0 MXN</span></div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h3>Autopartes Store</h3>
+        <p>Pago simulado con tarjeta de débito o crédito para fines escolares.</p>
+      </div>
+
+      <div>
+        <h3>Contacto</h3>
+        <p>Correo: autopartesstore@gmail.com</p>
+        <p>Teléfono: 55 1234 5678</p>
+      </div>
+
+      <div>
+        <h3>Ubicación</h3>
+        <p>Ecatepec de Morelos, Estado de México</p>
+      </div>
     </div>
 
-  </div>
+    <div class="footer-copy">© 2026 AutoParts Store | Proyecto en GitHub Pages</div>
+  </footer>
 
-</main>
+  <script src="products.js"></script>
+  <script src="product.js"></script>
+  <script>
+    function payNow() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-<footer>
-  <p style="text-align:center;">© 2026 AutoParts Store</p>
-</footer>
+      if (cart.length === 0) {
+        alert("Tu carrito está vacío.");
+        return;
+      }
 
-<script src="product.js"></script>
-
-<script>
-function pay(){
-  alert("Pago realizado con éxito (simulación)");
-  localStorage.removeItem("cart");
-  window.location.href="index.html";
-}
-</script>
-
+      alert("Pago realizado con éxito (simulación).");
+      localStorage.removeItem("cart");
+      window.location.href = "index.html";
+    }
+  </script>
 </body>
 </html>
