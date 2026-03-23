@@ -17,12 +17,13 @@
     </div>
 
     <nav>
-      <a href="index.html#productos">Productos</a>
+      <a href="#destacados">Inicio</a>
+      <a href="#productos">Productos</a>
       <a href="login.html">Iniciar sesión</a>
       <a href="register.html">Registrarte</a>
       <a href="address.html">Dirección</a>
-      <a href="index.html#comentarios">Comentarios</a>
-      <a href="index.html#contacto">Contacto</a>
+      <a href="#comentarios">Comentarios</a>
+      <a href="#contacto">Contacto</a>
       <a href="cart.html">Carrito <span id="cartCount" class="cart-badge">0</span></a>
     </nav>
   </header>
@@ -30,9 +31,9 @@
   <section class="hero">
     <div class="hero-content">
       <h1>Potencia el estilo de tu auto</h1>
-      <p>Faros, parrillas, alerones, rines, accesorios y autopartes con un diseño moderno y deportivo.</p>
+      <p>Faros, rejillas, alerones, rines, estribos y más autopartes con diseño moderno y deportivo.</p>
       <button class="primary-btn" onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">
-        Ver productos
+        Ver catálogo completo
       </button>
     </div>
   </section>
@@ -42,28 +43,29 @@
     <section class="benefits">
       <div class="benefit">
         <h3>Calidad premium</h3>
-        <p>Piezas llamativas y funcionales para mejorar la apariencia y el estilo visual del vehículo.</p>
+        <p>Piezas llamativas y funcionales para mejorar la apariencia y el estilo del vehículo.</p>
       </div>
       <div class="benefit">
         <h3>Diseño deportivo</h3>
-        <p>Autopartes con estilo moderno para que tu carro tenga una presencia más agresiva y original.</p>
+        <p>Autopartes con estilo moderno para que tu carro tenga una presencia más agresiva.</p>
       </div>
       <div class="benefit">
-        <h3>Compra sencilla</h3>
-        <p>Navega, revisa detalles, consulta medidas y agrega productos al carrito fácilmente.</p>
+        <h3>Amplio catálogo</h3>
+        <p>Explora 100 productos con distintas categorías, marcas, modelos y medidas.</p>
       </div>
     </section>
 
-    <h2 class="section-title" id="productos">Catálogo de productos</h2>
+    <h2 class="section-title" id="destacados">Lo que vendemos</h2>
+    <section class="products" id="featuredProductsContainer"></section>
+
+    <h2 class="section-title" id="productos" style="margin-top: 50px;">Catálogo completo de productos</h2>
     <section class="products" id="productsContainer"></section>
 
     <section class="form-grid">
       <div class="panel" id="comentarios">
         <h2>Comentarios</h2>
-
         <form id="homeReviewForm">
           <input id="homeReviewName" type="text" placeholder="Tu nombre" required>
-
           <select id="homeReviewStars">
             <option value="5">5 estrellas</option>
             <option value="4">4 estrellas</option>
@@ -71,9 +73,7 @@
             <option value="2">2 estrellas</option>
             <option value="1">1 estrella</option>
           </select>
-
           <textarea id="homeReviewComment" placeholder="Escribe tu comentario" required></textarea>
-
           <button type="submit">Publicar comentario</button>
         </form>
 
@@ -82,7 +82,6 @@
             <strong>Carlos</strong> - ★★★★★<br>
             Muy buena calidad, se ve increíble en mi auto.
           </div>
-
           <div class="review">
             <strong>Ana</strong> - ★★★★<br>
             Me gustó mucho el diseño, se ve más profesional.
@@ -93,9 +92,8 @@
       <div class="panel">
         <h2>Explora más</h2>
         <p style="margin-bottom: 12px; color: #d0d0d0;">
-          Usa el menú superior para entrar a tu cuenta, registrarte, guardar dirección o revisar tu carrito.
+          Usa el menú superior para iniciar sesión, registrarte, guardar tu dirección o revisar el carrito.
         </p>
-
         <a class="small-btn" href="login.html" style="display:block; margin-bottom:10px;">Ir a Iniciar sesión</a>
         <a class="small-btn" href="register.html" style="display:block; margin-bottom:10px;">Ir a Registrarte</a>
         <a class="small-btn" href="address.html" style="display:block; margin-bottom:10px;">Ir a Dirección</a>
