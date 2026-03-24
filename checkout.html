@@ -1,87 +1,126 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pagar | AutoParts Store</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pago | Autopartes Store</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <header>
-    <div class="logo">🔥 AutoParts Store</div>
-
-    <div class="search-bar">
-      <input type="text" placeholder="Busca más autopartes desde el inicio">
-      <button type="button" onclick="window.location.href='index.html'">Ir al inicio</button>
+  <header class="topbar">
+    <div class="logo">Autopartes Store</div>
+    <div class="topbar-right">
+      <nav class="nav">
+        <a href="index.html">Inicio</a>
+        <a href="cart.html">Carrito</a>
+        <a href="address.html">Dirección</a>
+      </nav>
     </div>
-
-    <nav>
-      <a href="index.html">Inicio</a>
-      <a href="cart.html">Carrito <span id="cartCount" class="cart-badge">0</span></a>
-    </nav>
   </header>
 
-  <main class="container">
-    <h2 class="section-title" style="margin-bottom: 25px;">Pago con tarjeta</h2>
+  <main class="pro-page">
+    <section class="page-header">
+      <span class="section-chip">Paso 2</span>
+      <h1>Método de pago</h1>
+      <p>Completa tu compra con una experiencia segura y profesional.</p>
+    </section>
 
-    <div class="product-layout">
-      <section class="panel">
-        <h2 style="margin-bottom: 15px;">Datos de la tarjeta</h2>
+    <section class="checkout-layout">
+      <div class="form-panel">
+        <form class="pro-form" id="checkout-form">
+          <h2>Pago con tarjeta</h2>
 
-        <input type="text" placeholder="Nombre en la tarjeta">
-        <input type="text" placeholder="Número de tarjeta (16 dígitos)">
-        <input type="text" placeholder="Fecha de expiración (MM/AA)">
-        <input type="text" placeholder="CVV">
+          <label>Nombre del titular
+            <input type="text" required placeholder="Como aparece en la tarjeta" />
+          </label>
 
-        <button type="button" onclick="payNow()">Pagar ahora</button>
-      </section>
+          <label>Número de tarjeta
+            <input type="text" required placeholder="1234 5678 9012 3456" maxlength="19" />
+          </label>
 
-      <aside class="panel">
-        <h2 style="margin-bottom: 15px;">Resumen de compra</h2>
-        <div id="cartItems"></div>
-        <div class="cart-total">Total: <span id="cartTotal">$0 MXN</span></div>
+          <div class="inline-fields">
+            <label>Vencimiento
+              <input type="text" required placeholder="MM/AA" maxlength="5" />
+            </label>
+
+            <label>CVV
+              <input type="text" required placeholder="123" maxlength="4" />
+            </label>
+          </div>
+
+          <label>Correo para confirmación
+            <input type="email" required placeholder="ejemplo@correo.com" />
+          </label>
+
+          <button type="submit" class="pro-btn pro-btn-primary full-btn">Finalizar compra</button>
+        </form>
+      </div>
+
+      <aside class="summary-panel">
+        <h2>Resumen final</h2>
+        <div class="summary-row">
+          <span>Productos</span>
+          <span id="checkout-items">0</span>
+        </div>
+        <div class="summary-row">
+          <span>Total</span>
+          <span id="checkout-total">$0</span>
+        </div>
+
+        <div class="summary-note" id="address-preview">
+          Cargando dirección...
+        </div>
       </aside>
-    </div>
+    </section>
   </main>
 
-  <footer>
-    <div class="footer-grid">
-      <div>
-        <h3>Autopartes Store</h3>
-        <p>Pago simulado con tarjeta de débito o crédito para fines escolares.</p>
-      </div>
-
-      <div>
-        <h3>Contacto</h3>
-        <p>Correo: autopartesstore@gmail.com</p>
-        <p>Teléfono: 55 1234 5678</p>
-      </div>
-
-      <div>
-        <h3>Ubicación</h3>
-        <p>Ecatepec de Morelos, Estado de México</p>
-      </div>
-    </div>
-
-    <div class="footer-copy">© 2026 AutoParts Store | Proyecto en GitHub Pages</div>
-  </footer>
-
-  <script src="products.js"></script>
-  <script src="product.js"></script>
   <script>
-    function payNow() {
+    function formatPrice(price) {
+      return new Intl.NumberFormat("es-MX", {
+        style: "currency",
+        currency: "MXN"
+      }).format(price);
+    }
+
+    function loadCheckoutData() {
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const address = JSON.parse(localStorage.getItem("shippingAddress")) || null;
 
-      if (cart.length === 0) {
-        alert("Tu carrito está vacío.");
-        return;
+      let totalItems = 0;
+      let totalPrice = 0;
+
+      cart.forEach(item => {
+        totalItems += item.quantity;
+        totalPrice += item.price * item.quantity;
+      });
+
+      document.getElementById("checkout-items").textContent = totalItems;
+      document.getElementById("checkout-total").textContent = formatPrice(totalPrice);
+
+      const addressPreview = document.getElementById("address-preview");
+
+      if (address) {
+        addressPreview.innerHTML = `
+          <strong>Enviar a:</strong><br>
+          ${address.fullname}<br>
+          ${address.street}<br>
+          ${address.neighborhood}, ${address.city}, ${address.state}<br>
+          CP: ${address.zip}<br>
+          Tel: ${address.phone}
+        `;
+      } else {
+        addressPreview.textContent = "No hay dirección guardada.";
       }
+    }
 
-      alert("Pago realizado con éxito (simulación).");
+    document.getElementById("checkout-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      alert("Compra realizada correctamente.");
       localStorage.removeItem("cart");
       window.location.href = "index.html";
-    }
+    });
+
+    loadCheckoutData();
   </script>
 </body>
 </html>
