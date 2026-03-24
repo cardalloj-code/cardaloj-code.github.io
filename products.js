@@ -336,8 +336,9 @@ const reviewPool = [
 const PRODUCTS = [];
 let idCounter = 1;
 
-baseProducts.forEach((baseProduct, typeIndex) => {
-  vehicleModels.forEach((vehicle, vehicleIndex) => {
+// SOLO 5 tipos de productos y 5 vehículos = 25 productos
+baseProducts.slice(0, 5).forEach((baseProduct, typeIndex) => {
+  vehicleModels.slice(0, 5).forEach((vehicle, vehicleIndex) => {
     PRODUCTS.push({
       id: idCounter,
       name: `${baseProduct.type} para ${vehicle.brand} ${vehicle.model}`,
@@ -359,3 +360,6 @@ baseProducts.forEach((baseProduct, typeIndex) => {
     idCounter++;
   });
 });
+
+// Verificación opcional
+console.log("Total de productos:", PRODUCTS.length);
