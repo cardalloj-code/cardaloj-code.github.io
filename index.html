@@ -1,29 +1,87 @@
-<footer class="footer">
-  <div class="footer-grid">
-    <div>
-      <h4>Autopartes Store</h4>
-      <p>Accesorios y autopartes para distintos modelos y marcas.</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autopartes Store</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">Autopartes Store</div>
+
+    <div class="topbar-right">
+      <div class="search-box">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Buscar autopartes..."
+        />
+        <button id="search-btn">Buscar</button>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html">Inicio</a>
+        <a href="cart.html">Carrito</a>
+        <a href="login.html">Iniciar sesión</a>
+        <a href="register.html">Registrarse</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Las mejores autopartes para tu vehículo</h1>
+      <p>
+        Encuentra calaveras, parrillas, reflejantes, cuartos, llaves y más
+        accesorios para diferentes marcas y modelos.
+      </p>
+      <a href="#productos" class="hero-btn">Ver productos</a>
+    </div>
+  </section>
+
+  <main class="main-content">
+    <section class="products-section" id="productos">
+      <h2>Lo que vendemos</h2>
+      <p class="section-text">
+        Encuentra autopartes y accesorios con buen precio y compatibilidad para diferentes vehículos.
+      </p>
+      <div id="products-container" class="products-grid"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <h4>Autopartes Store</h4>
+        <p>Accesorios y autopartes para distintos modelos y marcas.</p>
+      </div>
+
+      <div>
+        <h4>Contacto</h4>
+        <p>Teléfono: 55 1234 5678</p>
+        <p>Correo: autopartesstore@email.com</p>
+      </div>
+
+      <div>
+        <h4>Ubicación</h4>
+        <p>Av. Principal #123</p>
+        <p>Ciudad de México, México</p>
+      </div>
+
+      <div>
+        <h4>Información</h4>
+        <p>Políticas de privacidad</p>
+        <p>Políticas de pago</p>
+        <p>Políticas de devolución</p>
+      </div>
     </div>
 
-    <div>
-      <h4>Contacto</h4>
-      <p>Teléfono: 55 1234 5678</p>
-      <p>Correo: autopartesstore@email.com</p>
-    </div>
+    <p class="footer-copy">Autopartes Store © 2026 - Todos los derechos reservados</p>
+  </footer>
 
-    <div>
-      <h4>Ubicación</h4>
-      <p>Av. Principal #123</p>
-      <p>Ciudad de México, México</p>
-    </div>
-
-    <div>
-      <h4>Información</h4>
-      <p>Políticas de privacidad</p>
-      <p>Políticas de pago</p>
-      <p>Políticas de devolución</p>
-    </div>
-  </div>
-
-  <p class="footer-copy">Autopartes Store © 2026 - Todos los derechos reservados</p>
-</footer>
+  <script src="products.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
