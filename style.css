@@ -175,7 +175,7 @@ body {
   font-size: 16px;
 }
 
-/* TARJETAS DE PRODUCTO */
+/* TARJETAS */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
@@ -287,7 +287,6 @@ body {
   background: #d97706;
 }
 
-/* MENSAJE DE BÚSQUEDA */
 .no-results {
   text-align: center;
   background: white;
@@ -324,6 +323,43 @@ body {
   margin: 6px 0;
   color: #dce5ff;
   line-height: 1.6;
+}
+
+.policy-item {
+  margin-bottom: 10px;
+}
+
+.policy-toggle {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  padding: 0;
+  margin: 6px 0;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: left;
+  font-weight: normal;
+  font-family: Arial, sans-serif;
+}
+
+.policy-toggle:hover {
+  color: #fbbf24;
+}
+
+.policy-content {
+  display: none;
+  margin: 8px 0 14px;
+  padding: 10px 12px;
+  border-left: 2px solid rgba(251, 191, 36, 0.75);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 0 8px 8px 0;
+}
+
+.policy-content p {
+  margin: 0;
+  color: #dce5ff;
+  font-size: 14px;
+  line-height: 1.7;
 }
 
 .footer-copy {
