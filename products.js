@@ -1,365 +1,382 @@
-const baseProducts = [
+const PRODUCTS = [
   {
-    type: "Faros principales",
+    id: 1,
+    name: "Par Cuartos Reflejantes Traseros CV Beat",
     category: "Iluminación",
-    price: 3200,
-    measuresList: [
-      "58 cm x 24 cm x 20 cm",
-      "59 cm x 24 cm x 20 cm",
-      "60 cm x 25 cm x 21 cm",
-      "61 cm x 25 cm x 21 cm",
-      "62 cm x 26 cm x 22 cm",
-      "63 cm x 26 cm x 22 cm",
-      "64 cm x 27 cm x 22 cm",
-      "65 cm x 27 cm x 23 cm",
-      "66 cm x 28 cm x 23 cm",
-      "67 cm x 28 cm x 24 cm"
-    ],
-    shortDescription: "Juego de faros principales con diseño moderno para renovar el frente del vehículo.",
-    description: "Faros principales con acabado elegante, excelente iluminación y estructura resistente para mejorar la estética frontal y la visibilidad del automóvil.",
-    images: [
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=900&q=80"
+    price: 380,
+    extraPriceText: "Pieza: $200",
+    image: "images/producto1.jpg",
+    shortDescription: "Par de cuartos reflejantes traseros para Chevrolet Beat.",
+    description: "Par de cuartos reflejantes traseros compatibles con Chevrolet Beat modelos 2018 a 2021. Ideales para reemplazo y mejorar la apariencia del vehículo.",
+    measures: "Medidas no especificadas",
+    compatibility: "Chevrolet Beat 2018 a 2021",
+    stock: 6,
+    rating: 4.7,
+    reviews: [
+      { name: "Carlos", stars: 5, comment: "Muy buen producto y buen acabado." },
+      { name: "Ana", stars: 4, comment: "Se instalaron bien y se ven muy bien." }
     ]
   },
   {
-    type: "Faros de niebla",
+    id: 2,
+    name: "Par de Calaveras Vocho LED",
     category: "Iluminación",
-    price: 1650,
-    measuresList: [
-      "18 cm x 11 cm x 9 cm",
-      "18 cm x 11 cm x 9 cm",
-      "19 cm x 11 cm x 9 cm",
-      "19 cm x 12 cm x 10 cm",
-      "20 cm x 12 cm x 10 cm",
-      "20 cm x 12 cm x 10 cm",
-      "21 cm x 13 cm x 10 cm",
-      "21 cm x 13 cm x 11 cm",
-      "22 cm x 13 cm x 11 cm",
-      "22 cm x 14 cm x 11 cm"
-    ],
-    shortDescription: "Faros de niebla para mejorar visibilidad y seguridad en lluvia o neblina.",
-    description: "Faros de niebla compactos con buena intensidad de luz para mejorar la conducción en condiciones de clima complicado.",
-    images: [
-      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=900&q=80"
+    price: 1300,
+    extraPriceText: "",
+    image: "images/producto2.jpg",
+    shortDescription: "Par de calaveras LED para Vocho.",
+    description: "Par de calaveras LED para Vocho con diseño moderno, excelente iluminación y apariencia renovada para la parte trasera del vehículo.",
+    measures: "Medidas no especificadas",
+    compatibility: "Vocho",
+    stock: 4,
+    rating: 4.8,
+    reviews: [
+      { name: "Luis", stars: 5, comment: "Excelente diseño y buena iluminación." },
+      { name: "Miriam", stars: 4, comment: "Muy bonitas y fáciles de instalar." }
     ]
   },
   {
-    type: "Rejilla superior",
-    category: "Exterior",
-    price: 2100,
-    measuresList: [
-      "84 cm x 24 cm x 8 cm",
-      "85 cm x 24 cm x 8 cm",
-      "86 cm x 25 cm x 8 cm",
-      "87 cm x 25 cm x 9 cm",
-      "88 cm x 26 cm x 9 cm",
-      "89 cm x 26 cm x 9 cm",
-      "90 cm x 27 cm x 9 cm",
-      "91 cm x 27 cm x 10 cm",
-      "92 cm x 28 cm x 10 cm",
-      "93 cm x 28 cm x 10 cm"
-    ],
-    shortDescription: "Rejilla superior para renovar la imagen frontal con un diseño llamativo.",
-    description: "Rejilla superior con acabado moderno y estructura firme para darle al frente del vehículo una apariencia más deportiva.",
-    images: [
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=900&q=80"
+    id: 3,
+    name: "Perilla de Cambios DSG",
+    category: "Interior",
+    price: 480,
+    extraPriceText: "",
+    image: "images/producto3.jpg",
+    shortDescription: "Perilla de cambios DSG compatible con varios modelos Volkswagen.",
+    description: "Perilla de cambios DSG con acabado elegante y diseño moderno. Ideal para renovar el interior del vehículo.",
+    measures: "Medidas no especificadas",
+    compatibility: "Jetta MK6, Bora, Passat, Beetle",
+    stock: 8,
+    rating: 4.6,
+    reviews: [
+      { name: "Jorge", stars: 5, comment: "Se ve muy bien en el interior." },
+      { name: "Valeria", stars: 4, comment: "Buen material y buena presentación." }
     ]
   },
   {
-    type: "Rejilla inferior",
-    category: "Exterior",
-    price: 1550,
-    measuresList: [
-      "72 cm x 15 cm x 8 cm",
-      "73 cm x 15 cm x 8 cm",
-      "74 cm x 16 cm x 8 cm",
-      "75 cm x 16 cm x 8 cm",
-      "76 cm x 17 cm x 9 cm",
-      "77 cm x 17 cm x 9 cm",
-      "78 cm x 18 cm x 9 cm",
-      "79 cm x 18 cm x 9 cm",
-      "80 cm x 19 cm x 10 cm",
-      "81 cm x 19 cm x 10 cm"
-    ],
-    shortDescription: "Rejilla inferior para complementar el frente con un estilo más agresivo.",
-    description: "Rejilla inferior diseñada para integrarse a la defensa delantera y aportar una línea más deportiva al vehículo.",
-    images: [
-      "https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=900&q=80"
+    id: 4,
+    name: "Par de Coderas para Puerta",
+    category: "Interior",
+    price: 220,
+    extraPriceText: "",
+    image: "images/producto4.jpg",
+    shortDescription: "Par de coderas para puerta compatibles con varios modelos clásicos.",
+    description: "Par de coderas para puerta ideales para renovar el interior y brindar mayor comodidad y mejor apariencia.",
+    measures: "Medidas no especificadas",
+    compatibility: "Vocho, Caribe, Brasilia y Combi",
+    stock: 7,
+    rating: 4.5,
+    reviews: [
+      { name: "Pedro", stars: 5, comment: "Muy útiles y bien hechas." },
+      { name: "Laura", stars: 4, comment: "Buena relación calidad-precio." }
     ]
   },
   {
-    type: "Faldones laterales",
-    category: "Exterior",
-    price: 2450,
-    measuresList: [
-      "184 cm x 15 cm x 10 cm",
-      "185 cm x 15 cm x 10 cm",
-      "186 cm x 16 cm x 10 cm",
-      "187 cm x 16 cm x 10 cm",
-      "188 cm x 17 cm x 11 cm",
-      "189 cm x 17 cm x 11 cm",
-      "190 cm x 18 cm x 11 cm",
-      "191 cm x 18 cm x 11 cm",
-      "192 cm x 19 cm x 12 cm",
-      "193 cm x 19 cm x 12 cm"
-    ],
-    shortDescription: "Faldones laterales para darle una línea más baja y deportiva al auto.",
-    description: "Faldones laterales fabricados para mejorar la presencia visual del vehículo y complementar el kit aerodinámico.",
-    images: [
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=900&q=80"
+    id: 5,
+    name: "Par Cuartos de Salpicadera",
+    category: "Iluminación",
+    price: 140,
+    extraPriceText: "",
+    image: "images/producto5.jpg",
+    shortDescription: "Par de cuartos de salpicadera para varios modelos Volkswagen y Seat.",
+    description: "Par de cuartos de salpicadera para reemplazo con diseño funcional y excelente compatibilidad.",
+    measures: "Medidas no especificadas",
+    compatibility: "Jetta, Golf, Beetle, Derby, Córdoba, Ibiza",
+    stock: 10,
+    rating: 4.4,
+    reviews: [
+      { name: "Ricardo", stars: 4, comment: "Buen producto por el precio." },
+      { name: "Sofía", stars: 5, comment: "Quedaron perfectos." }
     ]
   },
   {
-    type: "Estribos laterales",
+    id: 6,
+    name: "Cuarto de Salpicadera Kia Rio LED Secuencial Mica Blanca",
+    category: "Iluminación",
+    price: 280,
+    extraPriceText: "",
+    image: "images/producto6.jpg",
+    shortDescription: "Par de cuartos LED secuenciales para Kia Rio.",
+    description: "Cuartos de salpicadera LED secuenciales con mica blanca para Kia Rio. Mejoran la apariencia lateral y dan un estilo más moderno.",
+    measures: "Medidas no especificadas",
+    compatibility: "Kia Rio",
+    stock: 5,
+    rating: 4.8,
+    reviews: [
+      { name: "Diego", stars: 5, comment: "Se ven increíbles encendidos." },
+      { name: "Fernanda", stars: 4, comment: "Muy buena presentación." }
+    ]
+  },
+  {
+    id: 7,
+    name: "Luz Stop de Cabina Ford Lobo F-150",
+    category: "Iluminación",
+    price: 350,
+    extraPriceText: "",
+    image: "images/producto7.jpg",
+    shortDescription: "Luz stop de cabina para Ford Lobo y F-150.",
+    description: "Luz stop de cabina para Ford Lobo F-150 modelos 2004 a 2008. Ideal para reemplazo con buena visibilidad y ajuste.",
+    measures: "Medidas no especificadas",
+    compatibility: "Ford Lobo F-150 2004 a 2008",
+    stock: 4,
+    rating: 4.6,
+    reviews: [
+      { name: "Mario", stars: 5, comment: "Muy buena calidad." },
+      { name: "Elena", stars: 4, comment: "Quedó muy bien instalada." }
+    ]
+  },
+  {
+    id: 8,
+    name: "Tapa de Bolsa de Aire de Tablero",
+    category: "Interior",
+    price: 600,
+    extraPriceText: "",
+    image: "images/producto8.jpg",
+    shortDescription: "Tapa de bolsa de aire para tablero de Polo y Vento.",
+    description: "Tapa de bolsa de aire de tablero completamente nueva para Polo y Vento de todos los años.",
+    measures: "Medidas no especificadas",
+    compatibility: "Polo y Vento, todos los años",
+    stock: 3,
+    rating: 4.7,
+    reviews: [
+      { name: "Raúl", stars: 5, comment: "Muy bien terminada." },
+      { name: "Patricia", stars: 4, comment: "Buena pieza de reemplazo." }
+    ]
+  },
+  {
+    id: 9,
+    name: "Calavera Aveo 2018 a 2023",
+    category: "Iluminación",
+    price: 650,
+    extraPriceText: "Disponible izquierda o derecha con arnés",
+    image: "images/producto9.jpg",
+    shortDescription: "Calavera para Aveo con arnés.",
+    description: "Calavera compatible con Aveo 2018 a 2023, disponible lado izquierdo o derecho con arnés incluido.",
+    measures: "Medidas no especificadas",
+    compatibility: "Aveo 2018 a 2023",
+    stock: 6,
+    rating: 4.8,
+    reviews: [
+      { name: "Héctor", stars: 5, comment: "Excelente calidad." },
+      { name: "Brenda", stars: 4, comment: "Muy buen ajuste." }
+    ]
+  },
+  {
+    id: 10,
+    name: "Carcasa de Llave 3 Botones Volkswagen",
     category: "Accesorios",
-    price: 3600,
-    measuresList: [
-      "194 cm x 19 cm x 15 cm",
-      "195 cm x 19 cm x 15 cm",
-      "196 cm x 20 cm x 15 cm",
-      "197 cm x 20 cm x 15 cm",
-      "198 cm x 21 cm x 16 cm",
-      "199 cm x 21 cm x 16 cm",
-      "200 cm x 22 cm x 16 cm",
-      "201 cm x 22 cm x 16 cm",
-      "202 cm x 23 cm x 17 cm",
-      "203 cm x 23 cm x 17 cm"
-    ],
-    shortDescription: "Estribos laterales con acabado resistente para un acceso más cómodo y mejor estilo.",
-    description: "Estribos laterales con diseño firme y atractivo, ideales para mejorar la apariencia lateral y facilitar el acceso.",
-    images: [
-      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=900&q=80"
+    price: 150,
+    extraPriceText: "",
+    image: "images/producto10.jpg",
+    shortDescription: "Carcasa de llave de coche de 3 botones para Volkswagen.",
+    description: "Carcasa de llave de coche fabricada en ABS + metal. Nueva y lista para reemplazar la carcasa original dañada.",
+    measures: "Medidas no especificadas",
+    compatibility: "Tiguan, Touran, Golf, Beetle, Polo, Jetta, Caddy, Eos",
+    stock: 12,
+    rating: 4.5,
+    reviews: [
+      { name: "Arturo", stars: 5, comment: "Justo lo que necesitaba." },
+      { name: "Daniela", stars: 4, comment: "Buen material." }
     ]
   },
   {
-    type: "Alerón volado",
-    category: "Exterior",
-    price: 3950,
-    measuresList: [
-      "132 cm x 23 cm x 17 cm",
-      "133 cm x 23 cm x 17 cm",
-      "134 cm x 24 cm x 17 cm",
-      "135 cm x 24 cm x 17 cm",
-      "136 cm x 25 cm x 18 cm",
-      "137 cm x 25 cm x 18 cm",
-      "138 cm x 26 cm x 18 cm",
-      "139 cm x 26 cm x 18 cm",
-      "140 cm x 27 cm x 19 cm",
-      "141 cm x 27 cm x 19 cm"
-    ],
-    shortDescription: "Alerón volado para un estilo agresivo y muy llamativo en la parte trasera.",
-    description: "Alerón volado con diseño deportivo de gran presencia, ideal para darle un look más extremo a la parte trasera.",
-    images: [
-      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=900&q=80"
-    ]
-  },
-  {
-    type: "Alerón delgado",
-    category: "Exterior",
-    price: 2450,
-    measuresList: [
-      "122 cm x 11 cm x 8 cm",
-      "123 cm x 11 cm x 8 cm",
-      "124 cm x 12 cm x 8 cm",
-      "125 cm x 12 cm x 8 cm",
-      "126 cm x 13 cm x 9 cm",
-      "127 cm x 13 cm x 9 cm",
-      "128 cm x 14 cm x 9 cm",
-      "129 cm x 14 cm x 9 cm",
-      "130 cm x 15 cm x 10 cm",
-      "131 cm x 15 cm x 10 cm"
-    ],
-    shortDescription: "Alerón delgado para una apariencia limpia, deportiva y discreta.",
-    description: "Alerón delgado de línea estilizada, perfecto para quienes buscan un detalle deportivo más fino y elegante.",
-    images: [
-      "https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=900&q=80"
-    ]
-  },
-  {
-    type: "Retrovisor exterior",
+    id: 11,
+    name: "Carcasa de Llave 4 Botones Volkswagen",
     category: "Accesorios",
-    price: 1580,
-    measuresList: [
-      "32 cm x 16 cm x 12 cm",
-      "33 cm x 16 cm x 12 cm",
-      "34 cm x 17 cm x 12 cm",
-      "35 cm x 17 cm x 12 cm",
-      "36 cm x 18 cm x 13 cm",
-      "37 cm x 18 cm x 13 cm",
-      "38 cm x 19 cm x 13 cm",
-      "39 cm x 19 cm x 13 cm",
-      "40 cm x 20 cm x 14 cm",
-      "41 cm x 20 cm x 14 cm"
-    ],
-    shortDescription: "Retrovisor exterior con estilo moderno para renovar el costado del vehículo.",
-    description: "Retrovisor exterior con estructura resistente y diseño actual para mejorar la imagen lateral del auto.",
-    images: [
-      "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=900&q=80"
+    price: 150,
+    extraPriceText: "",
+    image: "images/producto11.jpg",
+    shortDescription: "Carcasa de llave de coche de 4 botones para Volkswagen.",
+    description: "Carcasa de llave de coche fabricada en ABS + metal. Nueva, resistente y perfecta para reemplazo.",
+    measures: "Medidas no especificadas",
+    compatibility: "Tiguan, Touran, Golf, Beetle, Polo, Jetta, Caddy, Eos",
+    stock: 12,
+    rating: 4.5,
+    reviews: [
+      { name: "José", stars: 5, comment: "Buena compra." },
+      { name: "Mariana", stars: 4, comment: "Se siente resistente." }
     ]
   },
   {
-    type: "Rines deportivos",
-    category: "Ruedas",
-    price: 7200,
-    measuresList: [
-      "18 pulgadas",
-      "19 pulgadas",
-      "20 pulgadas",
-      "21 pulgadas",
-      "22 pulgadas",
-      "18 pulgadas",
-      "19 pulgadas",
-      "20 pulgadas",
-      "21 pulgadas",
-      "22 pulgadas"
-    ],
-    shortDescription: "Rines deportivos con acabado moderno para una imagen más agresiva y elegante.",
-    description: "Rines deportivos con diseño llamativo para elevar el estilo del vehículo y destacar visualmente el conjunto de ruedas.",
-    images: [
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=900&q=80"
+    id: 12,
+    name: "Carcasa Para Llave Control Remoto Kia 2 Botones",
+    category: "Accesorios",
+    price: 190,
+    extraPriceText: "",
+    image: "images/producto12.jpg",
+    shortDescription: "Carcasa para llave o control remoto Kia de 2 botones.",
+    description: "Carcasa de llave de coche fabricada en ABS + metal, nueva y sin uso. Ideal para reemplazar la carcasa original.",
+    measures: "Medidas no especificadas",
+    compatibility: "Kia 2 botones",
+    stock: 10,
+    rating: 4.4,
+    reviews: [
+      { name: "Gloria", stars: 4, comment: "Buena opción de reemplazo." },
+      { name: "Iván", stars: 5, comment: "Llegó en buen estado." }
+    ]
+  },
+  {
+    id: 13,
+    name: "Carcasa Para Llave Control Remoto Kia 3 Botones",
+    category: "Accesorios",
+    price: 200,
+    extraPriceText: "",
+    image: "images/producto13.jpg",
+    shortDescription: "Carcasa para llave o control remoto Kia de 3 botones.",
+    description: "Carcasa de llave nueva y lista para reemplazo. Fabricada con ABS + metal para mayor durabilidad.",
+    measures: "Medidas no especificadas",
+    compatibility: "Kia 3 botones",
+    stock: 10,
+    rating: 4.5,
+    reviews: [
+      { name: "Nadia", stars: 4, comment: "Buena calidad." },
+      { name: "Ulises", stars: 5, comment: "Se ajustó perfecto." }
+    ]
+  },
+  {
+    id: 14,
+    name: "Carcasa para Buick Chevrolet Opel 3 Botones",
+    category: "Accesorios",
+    price: 190,
+    extraPriceText: "",
+    image: "images/producto14.jpg",
+    shortDescription: "Carcasa de llave 3 botones compatible con varios modelos.",
+    description: "Carcasa para llave de coche fabricada en ABS + metal. Nueva, sin uso y lista para reemplazo de carcasa original.",
+    measures: "Medidas no especificadas",
+    compatibility: "Insignia, Astra, Mokka, Zafira, Cruze, Epica, Lova, Camaro, Impala, Vauxhall",
+    stock: 9,
+    rating: 4.4,
+    reviews: [
+      { name: "Emilio", stars: 5, comment: "Muy útil para reemplazo." },
+      { name: "Claudia", stars: 4, comment: "Buen material." }
+    ]
+  },
+  {
+    id: 15,
+    name: "Cuarto Ford Lobo / F150",
+    category: "Iluminación",
+    price: 250,
+    extraPriceText: "Pieza individual",
+    image: "images/producto15.jpg",
+    shortDescription: "Cuarto para Ford Lobo y F150.",
+    description: "Cuarto compatible con Ford Lobo 1997 a 2003 y F150 1997 a 2009. Disponible izquierdo o derecho.",
+    measures: "Medidas no especificadas",
+    compatibility: "Ford Lobo 1997 a 2003 / F150 1997 a 2009",
+    stock: 7,
+    rating: 4.5,
+    reviews: [
+      { name: "Tomás", stars: 5, comment: "Buen ajuste." },
+      { name: "Rosa", stars: 4, comment: "Se ve bien instalado." }
+    ]
+  },
+  {
+    id: 16,
+    name: "Calavera Vento Nacional 2016 a 2019",
+    category: "Iluminación",
+    price: 530,
+    extraPriceText: "Pieza individual",
+    image: "images/producto16.jpg",
+    shortDescription: "Calavera nacional para Vento.",
+    description: "Calavera compatible con Vento 2016 a 2019, ideal para reemplazo con buen acabado y ajuste.",
+    measures: "Medidas no especificadas",
+    compatibility: "Vento 2016 a 2019",
+    stock: 5,
+    rating: 4.6,
+    reviews: [
+      { name: "Gerardo", stars: 5, comment: "Muy buena pieza." },
+      { name: "Paola", stars: 4, comment: "Buena calidad y presentación." }
+    ]
+  },
+  {
+    id: 17,
+    name: "Espadillas Mazda Negras o Tipo Fibra de Carbono",
+    category: "Exterior",
+    price: 340,
+    extraPriceText: "",
+    image: "images/producto17.jpg",
+    shortDescription: "Par de espadillas Mazda en color negro o tipo fibra de carbono.",
+    description: "Par de espadillas de metal para Mazda con acabado negro o tipo fibra de carbono. Ideales para mejorar la apariencia exterior.",
+    measures: "Medidas no especificadas",
+    compatibility: "Mazda",
+    stock: 6,
+    rating: 4.7,
+    reviews: [
+      { name: "Kevin", stars: 5, comment: "Se ven deportivas." },
+      { name: "Andrea", stars: 4, comment: "Buen acabado." }
+    ]
+  },
+  {
+    id: 18,
+    name: "Parrilla Negra con Moldura",
+    category: "Exterior",
+    price: 920,
+    extraPriceText: "Pieza individual",
+    image: "images/producto18.jpg",
+    shortDescription: "Parrilla negra con moldura para Vento y Polo.",
+    description: "Parrilla negra con moldura compatible con Vento 2020 a 2024 y Polo 2013 a 2024. Excelente para renovar el frente del vehículo.",
+    measures: "Medidas no especificadas",
+    compatibility: "Vento 2020 a 2024 / Polo 2013 a 2024",
+    stock: 4,
+    rating: 4.8,
+    reviews: [
+      { name: "Samuel", stars: 5, comment: "Muy elegante y moderna." },
+      { name: "Liliana", stars: 4, comment: "Buena compra." }
+    ]
+  },
+  {
+    id: 19,
+    name: "Par Calaveras Tsuru 3 Rojo Cristal",
+    category: "Iluminación",
+    price: 500,
+    extraPriceText: "Pieza: $250",
+    image: "images/producto19.jpg",
+    shortDescription: "Par de calaveras rojo cristal para Tsuru 3.",
+    description: "Par de calaveras para Tsuru 3 en acabado rojo cristal, compatibles con modelos 1992 a 2017.",
+    measures: "Medidas no especificadas",
+    compatibility: "Tsuru 3 1992 a 2017",
+    stock: 5,
+    rating: 4.7,
+    reviews: [
+      { name: "Noé", stars: 5, comment: "Muy bonitas." },
+      { name: "Diana", stars: 4, comment: "Buen producto." }
+    ]
+  },
+  {
+    id: 20,
+    name: "Parrilla Jetta A4 Tipo GLI con Emblema Rojo",
+    category: "Exterior",
+    price: 1000,
+    extraPriceText: "Filo cromo o filo rojo",
+    image: "images/producto20.jpg",
+    shortDescription: "Parrilla tipo GLI para Jetta A4.",
+    description: "Parrilla tipo GLI con emblema rojo para Jetta A4, compatible con modelos 1999 a 2007. Disponible con filo cromo o filo rojo.",
+    measures: "Medidas no especificadas",
+    compatibility: "Jetta A4 1999 a 2007",
+    stock: 3,
+    rating: 4.9,
+    reviews: [
+      { name: "Óscar", stars: 5, comment: "Le dio otro estilo al carro." },
+      { name: "Karen", stars: 5, comment: "Excelente calidad." }
+    ]
+  },
+  {
+    id: 21,
+    name: "Par Calavera Nissan Urvan",
+    category: "Iluminación",
+    price: 430,
+    extraPriceText: "Pieza: $250",
+    image: "images/producto21.jpg",
+    shortDescription: "Par de calaveras para Nissan Urvan.",
+    description: "Par de calaveras para Nissan Urvan, compatibles con varios años. Excelente opción de reemplazo.",
+    measures: "Medidas no especificadas",
+    compatibility: "Nissan Urvan 2002, 2004, 2005, 2007, 2008, 2010, 2012",
+    stock: 4,
+    rating: 4.6,
+    reviews: [
+      { name: "César", stars: 5, comment: "Muy buen ajuste." },
+      { name: "Marisol", stars: 4, comment: "Todo bien con el producto." }
     ]
   }
 ];
 
-const vehicleModels = [
-  { brand: "Volkswagen", model: "Jetta GLI" },
-  { brand: "Volkswagen", model: "Golf GTI" },
-  { brand: "Nissan", model: "Versa" },
-  { brand: "Nissan", model: "Sentra" },
-  { brand: "Chevrolet", model: "Aveo" },
-  { brand: "Chevrolet", model: "Camaro" },
-  { brand: "Jeep", model: "Wrangler" },
-  { brand: "SEAT", model: "Ibiza" },
-  { brand: "Toyota", model: "Tacoma" },
-  { brand: "Honda", model: "Civic" }
-];
-
-const reviewPool = [
-  { name: "Carlos", stars: 5, comment: "Excelente calidad y muy buen acabado." },
-  { name: "Ana", stars: 4, comment: "Se ve muy bien instalado en el auto." },
-  { name: "Luis", stars: 5, comment: "Buen producto, lo recomiendo." },
-  { name: "Miriam", stars: 4, comment: "Buena relación calidad-precio." },
-  { name: "Jorge", stars: 5, comment: "Me gustó mucho el diseño." },
-  { name: "Valeria", stars: 4, comment: "Muy bonito y se ve moderno." }
-];
-
-const PRODUCTS = [];
-let idCounter = 1;
-
-// SOLO 5 tipos de productos y 5 vehículos = 25 productos
-baseProducts.slice(0, 5).forEach((baseProduct, typeIndex) => {
-  vehicleModels.slice(0, 5).forEach((vehicle, vehicleIndex) => {
-    PRODUCTS.push({
-      id: idCounter,
-      name: `${baseProduct.type} para ${vehicle.brand} ${vehicle.model}`,
-      category: baseProduct.category,
-      price: baseProduct.price + (vehicleIndex * 120) + (typeIndex * 45),
-      image: baseProduct.images[vehicleIndex],
-      shortDescription: `${baseProduct.shortDescription} Diseñado para ${vehicle.brand} ${vehicle.model}.`,
-      description: `${baseProduct.description} Esta versión está pensada para ${vehicle.brand} ${vehicle.model}, ofreciendo una apariencia más atractiva y mejor integración visual con el vehículo.`,
-      measures: baseProduct.measuresList[vehicleIndex],
-      compatibility: `Compatible con ${vehicle.brand} ${vehicle.model}.`,
-      stock: 5 + ((vehicleIndex + typeIndex) % 8),
-      rating: Number((4.2 + ((vehicleIndex + typeIndex) % 8) * 0.1).toFixed(1)),
-      reviews: [
-        reviewPool[(vehicleIndex + typeIndex) % reviewPool.length],
-        reviewPool[(vehicleIndex + typeIndex + 2) % reviewPool.length]
-      ]
-    });
-
-    idCounter++;
-  });
-});
-
-// Verificación opcional
 console.log("Total de productos:", PRODUCTS.length);
