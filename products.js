@@ -378,5 +378,3 @@ const PRODUCTS = [
     ]
   }
 ];
-
-console.log("Total de productos:", PRODUCTS.length);
