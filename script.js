@@ -105,4 +105,21 @@ if (searchInput) {
 
 document.addEventListener("DOMContentLoaded", () => {
   renderProducts(PRODUCTS);
+
+  const policyButtons = document.querySelectorAll(".policy-toggle");
+
+  policyButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const content = button.nextElementSibling;
+      const isVisible = content.style.display === "block";
+
+      document.querySelectorAll(".policy-content").forEach((item) => {
+        item.style.display = "none";
+      });
+
+      if (!isVisible) {
+        content.style.display = "block";
+      }
+    });
+  });
 });
