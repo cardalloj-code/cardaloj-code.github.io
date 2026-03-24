@@ -89,25 +89,24 @@ function searchProducts(term) {
   renderProducts(filtered);
 }
 
-if (searchBtn) {
-  searchBtn.addEventListener("click", () => {
-    searchProducts(searchInput.value);
-  });
-}
-
-if (searchInput) {
-  searchInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      searchProducts(searchInput.value);
-    }
-  });
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-  renderProducts(PRODUCTS);
+  if (typeof PRODUCTS !== "undefined" && productsContainer) {
+    renderProducts(PRODUCTS);
+  }
+
+  if (searchBtn && searchInput) {
+    searchBtn.addEventListener("click", () => {
+      searchProducts(searchInput.value);
+    });
+
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        searchProducts(searchInput.value);
+      }
+    });
+  }
 
   const policyButtons = document.querySelectorAll(".policy-toggle");
-
   policyButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const content = button.nextElementSibling;
