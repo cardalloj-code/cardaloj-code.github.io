@@ -1,45 +1,74 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registrarte | AutoParts Store</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro | Autopartes Store</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <header>
-    <div class="logo">🔥 AutoParts Store</div>
-
-    <div class="search-bar">
-      <input type="text" placeholder="Buscar autopartes...">
-      <button type="button" onclick="window.location.href='index.html'">Inicio</button>
+  <header class="topbar">
+    <div class="logo">Autopartes Store</div>
+    <div class="topbar-right">
+      <nav class="nav">
+        <a href="index.html">Inicio</a>
+        <a href="cart.html">Carrito</a>
+        <a href="login.html">Iniciar sesión</a>
+      </nav>
     </div>
-
-    <nav>
-      <a href="index.html#productos">Productos</a>
-      <a href="login.html">Iniciar sesión</a>
-      <a href="register.html">Registrarte</a>
-      <a href="address.html">Dirección</a>
-      <a href="cart.html">Carrito <span id="cartCount" class="cart-badge">0</span></a>
-    </nav>
   </header>
 
-  <main class="container">
-    <section class="panel" style="max-width:650px; margin:40px auto;">
-      <h2>Registrarte</h2>
-      <input data-save="register_name" type="text" placeholder="Nombre completo">
-      <input data-save="register_email" type="email" placeholder="Correo electrónico">
-      <input data-save="register_phone" type="tel" placeholder="Número de celular">
-      <input data-save="register_password" type="password" placeholder="Contraseña">
-      <button type="button">Crear cuenta</button>
+  <main class="auth-page">
+    <section class="auth-card">
+      <div class="auth-left">
+        <span class="auth-badge">Crea tu cuenta</span>
+        <h1>Regístrate y compra más rápido</h1>
+        <p>
+          Guarda tus datos, direcciones y pedidos en una experiencia más cómoda y profesional.
+        </p>
+      </div>
+
+      <div class="auth-right">
+        <form class="pro-form" id="register-form">
+          <h2>Crear cuenta</h2>
+
+          <label for="register-name">Nombre completo</label>
+          <input type="text" id="register-name" placeholder="Tu nombre completo" required />
+
+          <label for="register-email">Correo electrónico</label>
+          <input type="email" id="register-email" placeholder="ejemplo@correo.com" required />
+
+          <label for="register-password">Contraseña</label>
+          <input type="password" id="register-password" placeholder="********" required />
+
+          <label for="register-confirm-password">Confirmar contraseña</label>
+          <input type="password" id="register-confirm-password" placeholder="********" required />
+
+          <button type="submit" class="pro-btn pro-btn-primary">Crear cuenta</button>
+
+          <p class="form-helper">
+            ¿Ya tienes cuenta? <a href="login.html">Iniciar sesión</a>
+          </p>
+        </form>
+      </div>
     </section>
   </main>
 
-  <footer>
-    <div class="footer-copy">© 2026 AutoParts Store</div>
-  </footer>
+  <script>
+    document.getElementById("register-form").addEventListener("submit", function (e) {
+      e.preventDefault();
 
-  <script src="script.js"></script>
+      const password = document.getElementById("register-password").value;
+      const confirmPassword = document.getElementById("register-confirm-password").value;
+
+      if (password !== confirmPassword) {
+        alert("Las contraseñas no coinciden.");
+        return;
+      }
+
+      alert("Registro simulado correctamente.");
+      window.location.href = "login.html";
+    });
+  </script>
 </body>
 </html>
