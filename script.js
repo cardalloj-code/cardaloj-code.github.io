@@ -105,26 +105,4 @@ if (searchInput) {
 
 document.addEventListener("DOMContentLoaded", () => {
   renderProducts(PRODUCTS);
-
-  const accordionButtons = document.querySelectorAll(".accordion-btn");
-
-  accordionButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const content = button.nextElementSibling;
-      const isOpen = content.style.display === "block";
-
-      document.querySelectorAll(".accordion-content").forEach((item) => {
-        item.style.display = "none";
-      });
-
-      document.querySelectorAll(".accordion-btn").forEach((btn) => {
-        btn.classList.remove("active");
-      });
-
-      if (!isOpen) {
-        content.style.display = "block";
-        button.classList.add("active");
-      }
-    });
-  });
 });
