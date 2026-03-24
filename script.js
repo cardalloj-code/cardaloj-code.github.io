@@ -1,8 +1,6 @@
 const productsContainer = document.getElementById("products-container");
 const searchInput = document.getElementById("search-input");
 const searchBtn = document.getElementById("search-btn");
-const searchHistoryContainer = document.getElementById("search-history");
-const clearHistoryBtn = document.getElementById("clear-history-btn");
 
 function formatPrice(price) {
   return new Intl.NumberFormat("es-MX", {
@@ -70,47 +68,6 @@ function addToCart(productId) {
   alert("Producto agregado al carrito");
 }
 
-function saveSearchTerm(term) {
-  if (!term) return;
-
-  let history = JSON.parse(localStorage.getItem("searchHistory")) || [];
-
-  history = history.filter((item) => item.toLowerCase() !== term.toLowerCase());
-  history.unshift(term);
-
-  if (history.length > 8) {
-    history = history.slice(0, 8);
-  }
-
-  localStorage.setItem("searchHistory", JSON.stringify(history));
-  renderSearchHistory();
-}
-
-function renderSearchHistory() {
-  if (!searchHistoryContainer) return;
-
-  const history = JSON.parse(localStorage.getItem("searchHistory")) || [];
-  searchHistoryContainer.innerHTML = "";
-
-  if (!history.length) {
-    searchHistoryContainer.innerHTML = `<span class="history-tag">Sin búsquedas recientes</span>`;
-    return;
-  }
-
-  history.forEach((term) => {
-    const tag = document.createElement("span");
-    tag.className = "history-tag";
-    tag.textContent = term;
-
-    tag.addEventListener("click", () => {
-      searchInput.value = term;
-      searchProducts(term);
-    });
-
-    searchHistoryContainer.appendChild(tag);
-  });
-}
-
 function searchProducts(term) {
   const cleanTerm = term.trim().toLowerCase();
 
@@ -130,7 +87,6 @@ function searchProducts(term) {
   });
 
   renderProducts(filtered);
-  saveSearchTerm(term);
 }
 
 if (searchBtn) {
@@ -147,12 +103,28 @@ if (searchInput) {
   });
 }
 
-if (clearHistoryBtn) {
-  clearHistoryBtn.addEventListener("click", () => {
-    localStorage.removeItem("searchHistory");
-    renderSearchHistory();
-  });
-}
+document.addEventListener("DOMContentLoaded", () => {
+  renderProducts(PRODUCTS);
 
-renderProducts(PRODUCTS);
-renderSearchHistory();
+  const accordionButtons = document.querySelectorAll(".accordion-btn");
+
+  accordionButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const content = button.nextElementSibling;
+      const isOpen = content.style.display === "block";
+
+      document.querySelectorAll(".accordion-content").forEach((item) => {
+        item.style.display = "none";
+      });
+
+      document.querySelectorAll(".accordion-btn").forEach((btn) => {
+        btn.classList.remove("active");
+      });
+
+      if (!isOpen) {
+        content.style.display = "block";
+        button.classList.add("active");
+      }
+    });
+  });
+});
