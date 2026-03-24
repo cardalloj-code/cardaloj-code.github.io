@@ -1,43 +1,96 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dirección</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dirección de envío | Autopartes Store</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <div class="logo">🔥 AutoParts Store</div>
-    <div class="search-bar">
-      <input type="text" placeholder="Buscar autopartes...">
-      <button type="button" onclick="window.location.href='index.html'">Inicio</button>
+  <header class="topbar">
+    <div class="logo">Autopartes Store</div>
+    <div class="topbar-right">
+      <nav class="nav">
+        <a href="index.html">Inicio</a>
+        <a href="cart.html">Carrito</a>
+      </nav>
     </div>
-    <nav>
-      <a href="index.html#productos">Productos</a>
-      <a href="login.html">Iniciar sesión</a>
-      <a href="register.html">Registrarte</a>
-      <a href="address.html">Dirección</a>
-      <a href="cart.html">Carrito <span id="cartCount" class="cart-badge">0</span></a>
-    </nav>
   </header>
 
-  <main class="container">
-    <section class="panel" style="max-width:700px; margin:40px auto;">
-      <h2>Dirección de envío</h2>
-      <input data-save="address_street" type="text" placeholder="Calle y número">
-      <input data-save="address_neighborhood" type="text" placeholder="Colonia">
-      <input data-save="address_city" type="text" placeholder="Ciudad">
-      <input data-save="address_state" type="text" placeholder="Estado">
-      <input data-save="address_cp" type="text" placeholder="Código postal">
-      <button type="button">Guardar dirección</button>
+  <main class="pro-page">
+    <section class="page-header">
+      <span class="section-chip">Paso 1</span>
+      <h1>Dirección de envío</h1>
+      <p>Completa los datos para entregar tu pedido correctamente.</p>
+    </section>
+
+    <section class="checkout-layout">
+      <div class="form-panel">
+        <form class="pro-form two-columns" id="address-form">
+          <label>Nombre completo
+            <input type="text" id="fullname" required placeholder="Nombre y apellidos" />
+          </label>
+
+          <label>Teléfono
+            <input type="tel" id="phone" required placeholder="55 1234 5678" />
+          </label>
+
+          <label class="full-width">Calle y número
+            <input type="text" id="street" required placeholder="Ej. Av. Principal #123" />
+          </label>
+
+          <label>Colonia
+            <input type="text" id="neighborhood" required placeholder="Colonia" />
+          </label>
+
+          <label>Código postal
+            <input type="text" id="zip" required placeholder="00000" />
+          </label>
+
+          <label>Ciudad
+            <input type="text" id="city" required placeholder="Ciudad" />
+          </label>
+
+          <label>Estado
+            <input type="text" id="state" required placeholder="Estado" />
+          </label>
+
+          <label class="full-width">Referencias
+            <textarea id="references" rows="4" placeholder="Ej. Casa blanca, portón negro, entre calles..."></textarea>
+          </label>
+
+          <button type="submit" class="pro-btn pro-btn-primary full-btn">Guardar y continuar</button>
+        </form>
+      </div>
+
+      <aside class="summary-panel">
+        <h2>Información de envío</h2>
+        <p>Tu pedido será procesado una vez confirmados tus datos y el pago.</p>
+        <div class="summary-note">
+          Verifica bien la dirección para evitar retrasos en la entrega.
+        </div>
+      </aside>
     </section>
   </main>
 
-  <footer>
-    <div class="footer-copy">© 2026 AutoParts Store</div>
-  </footer>
+  <script>
+    document.getElementById("address-form").addEventListener("submit", function (e) {
+      e.preventDefault();
 
-  <script src="script.js"></script>
+      const addressData = {
+        fullname: document.getElementById("fullname").value,
+        phone: document.getElementById("phone").value,
+        street: document.getElementById("street").value,
+        neighborhood: document.getElementById("neighborhood").value,
+        zip: document.getElementById("zip").value,
+        city: document.getElementById("city").value,
+        state: document.getElementById("state").value,
+        references: document.getElementById("references").value
+      };
+
+      localStorage.setItem("shippingAddress", JSON.stringify(addressData));
+      window.location.href = "checkout.html";
+    });
+  </script>
 </body>
 </html>
