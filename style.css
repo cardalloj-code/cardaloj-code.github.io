@@ -126,15 +126,19 @@ body {
   justify-content: center;
   text-align: center;
   padding: 40px 20px;
-  background-image: url("https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1600&q=80");
+  background-image: url("images/fondo-principal.jpg");
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(rgba(5, 12, 30, 0.72), rgba(9, 19, 48, 0.62));
+  background: linear-gradient(
+    rgba(5, 12, 30, 0.45),
+    rgba(9, 19, 48, 0.45)
+  );
 }
 
 .hero-content {
