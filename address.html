@@ -18,53 +18,42 @@
       </nav>
     </div>
   </header>
-
   <main class="pro-page">
     <section class="page-header">
       <span class="section-chip">Paso 1</span>
       <h1>Dirección de envío</h1>
       <p>Completa los datos para entregar tu pedido correctamente.</p>
     </section>
-
     <section class="checkout-layout">
       <div class="form-panel">
         <form class="pro-form two-columns" id="address-form">
           <label>Nombre completo
             <input type="text" id="fullname" required placeholder="Nombre y apellidos" />
           </label>
-
           <label>Teléfono
             <input type="tel" id="phone" required placeholder="55 1234 5678" />
           </label>
-
           <label class="full-width">Calle y número
             <input type="text" id="street" required placeholder="Ej. Av. Principal #123" />
           </label>
-
           <label>Colonia
             <input type="text" id="neighborhood" required placeholder="Colonia" />
           </label>
-
           <label>Código postal
             <input type="text" id="zip" required placeholder="00000" />
           </label>
-
           <label>Ciudad
             <input type="text" id="city" required placeholder="Ciudad" />
           </label>
-
           <label>Estado
             <input type="text" id="state" required placeholder="Estado" />
           </label>
-
           <label class="full-width">Referencias
             <textarea id="references" rows="4" placeholder="Ej. Casa blanca, portón negro, entre calles..."></textarea>
           </label>
-
           <button type="submit" class="pro-btn pro-btn-primary full-btn">Guardar y continuar</button>
         </form>
       </div>
-
       <aside class="summary-panel">
         <h2>Información de envío</h2>
         <p>Tu pedido será procesado una vez confirmados tus datos y el pago.</p>
@@ -75,8 +64,23 @@
     </section>
   </main>
 
-  <script>
-    document.getElementById("address-form").addEventListener("submit", function (e) {
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBQ-TIBlQMBo_Q5Qf6QFCKwzII3GJQ4MyI",
+      authDomain: "autopartes-store.firebaseapp.com",
+      projectId: "autopartes-store",
+      storageBucket: "autopartes-store.firebasestorage.app",
+      messagingSenderId: "98732617446",
+      appId: "1:98732617446:web:437926fe4dcbdb984c5527"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    document.getElementById("address-form").addEventListener("submit", async function (e) {
       e.preventDefault();
 
       const addressData = {
@@ -90,7 +94,22 @@
         references: document.getElementById("references").value
       };
 
+      // Guardar en localStorage para el checkout
       localStorage.setItem("shippingAddress", JSON.stringify(addressData));
+
+      // Guardar en Firestore si hay usuario activo
+      const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
+      if (usuarioActivo) {
+        try {
+          await setDoc(doc(db, "direcciones", usuarioActivo.uid), {
+            ...addressData,
+            fecha: new Date().toISOString()
+          });
+        } catch (error) {
+          console.error("Error guardando dirección:", error);
+        }
+      }
+
       window.location.href = "checkout.html";
     });
   </script>
