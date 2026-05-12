@@ -18,7 +18,6 @@
       </nav>
     </div>
   </header>
-
   <main class="auth-page">
     <section class="auth-card">
       <div class="auth-left">
@@ -26,19 +25,14 @@
         <h1>Inicia sesión en tu cuenta</h1>
         <p>Accede para revisar tus pedidos, guardar direcciones y continuar con tus compras.</p>
       </div>
-
       <div class="auth-right">
         <form class="pro-form" id="login-form">
           <h2>Iniciar sesión</h2>
-
           <label for="login-email">Correo electrónico</label>
           <input type="email" id="login-email" placeholder="ejemplo@correo.com" required />
-
           <label for="login-password">Contraseña</label>
           <input type="password" id="login-password" placeholder="********" required />
-
           <button type="submit" class="pro-btn pro-btn-primary full-btn">Entrar</button>
-
           <p class="form-helper">
             ¿No tienes cuenta? <a href="register.html">Crear una cuenta</a>
           </p>
@@ -47,11 +41,50 @@
     </section>
   </main>
 
-  <script>
-    document.getElementById("login-form").addEventListener("submit", function (e) {
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBQ-TIBlQMBo_Q5Qf6QFCKwzII3GJQ4MyI",
+      authDomain: "autopartes-store.firebaseapp.com",
+      projectId: "autopartes-store",
+      storageBucket: "autopartes-store.firebasestorage.app",
+      messagingSenderId: "98732617446",
+      appId: "1:98732617446:web:437926fe4dcbdb984c5527"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    document.getElementById("login-form").addEventListener("submit", async function (e) {
       e.preventDefault();
-      alert("Inicio de sesión simulado correctamente.");
-      window.location.href = "index.html";
+
+      const correo = document.getElementById("login-email").value;
+      const password = document.getElementById("login-password").value;
+
+      try {
+        const resultado = await signInWithEmailAndPassword(auth, correo, password);
+        const usuario = resultado.user;
+
+        // Guardar sesión en localStorage
+        localStorage.setItem("usuarioActivo", JSON.stringify({
+          uid: usuario.uid,
+          correo: usuario.email
+        }));
+
+        alert("¡Bienvenido!");
+        window.location.href = "index.html";
+
+      } catch (error) {
+        if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password" || error.code === "auth/invalid-credential") {
+          alert("Correo o contraseña incorrectos.");
+        } else if (error.code === "auth/invalid-email") {
+          alert("El correo no es válido.");
+        } else {
+          alert("Error: " + error.message);
+        }
+      }
     });
   </script>
 </body>
