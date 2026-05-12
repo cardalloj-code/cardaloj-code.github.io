@@ -18,7 +18,6 @@
       </nav>
     </div>
   </header>
-
   <main class="auth-page">
     <section class="auth-card">
       <div class="auth-left">
@@ -56,9 +55,55 @@
       authDomain: "autopartes-store.firebaseapp.com",
       projectId: "autopartes-store",
       storageBucket: "autopartes-store.firebasestorage.app",
-      messagingSenderId: "98732617446",
+      messagingSenderId: "98732617246",
       appId: "1:98732617446:web:437926fe4dcbdb984c5527"
     };
 
     const app = initializeApp(firebaseConfig);
-    const db = getFi
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    document.getElementById("register-form").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const nombre = document.getElementById("register-name").value;
+      const correo = document.getElementById("register-email").value;
+      const password = document.getElementById("register-password").value;
+      const confirmar = document.getElementById("register-confirm-password").value;
+
+      if (password !== confirmar) {
+        alert("Las contraseñas no coinciden.");
+        return;
+      }
+
+      try {
+        // Crear usuario en Firebase Auth
+        const resultado = await createUserWithEmailAndPassword(auth, correo, password);
+        const uid = resultado.user.uid;
+
+        // Guardar datos en Firestore (base de datos)
+        await setDoc(doc(db, "usuarios", uid), {
+          nombre: nombre,
+          correo: correo,
+          fechaRegistro: new Date().toISOString(),
+          rol: "cliente"
+        });
+
+        alert("¡Registro exitoso! Bienvenido " + nombre);
+        window.location.href = "login.html";
+
+      } catch (error) {
+        if (error.code === "auth/email-already-in-use") {
+          alert("Este correo ya está registrado. Intenta iniciar sesión.");
+        } else if (error.code === "auth/weak-password") {
+          alert("La contraseña debe tener al menos 6 caracteres.");
+        } else if (error.code === "auth/invalid-email") {
+          alert("El correo no es válido.");
+        } else {
+          alert("Error: " + error.message);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
