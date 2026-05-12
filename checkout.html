@@ -8,7 +8,7 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="logo">Autopartes Store</div>
+    <div class="logo">⚙️ Autopartes Store</div>
     <div class="topbar-right">
       <nav class="nav pro-nav">
         <a href="index.html" class="nav-link">Inicio</a>
@@ -25,49 +25,40 @@
       <h1>Método de pago</h1>
       <p>Completa tu compra con una experiencia segura y profesional.</p>
     </section>
-
     <section class="checkout-layout">
       <div class="form-panel">
         <form class="pro-form" id="checkout-form">
           <h2>Pago con tarjeta</h2>
-
           <label>Nombre del titular
-            <input type="text" required placeholder="Como aparece en la tarjeta" />
+            <input type="text" id="titular" required placeholder="Como aparece en la tarjeta" />
           </label>
-
           <label>Número de tarjeta
-            <input type="text" required placeholder="1234 5678 9012 3456" maxlength="19" />
+            <input type="text" id="numero-tarjeta" required placeholder="1234 5678 9012 3456" maxlength="19" />
           </label>
-
           <div class="inline-fields">
             <label>Vencimiento
-              <input type="text" required placeholder="MM/AA" maxlength="5" />
+              <input type="text" id="vencimiento" required placeholder="MM/AA" maxlength="5" />
             </label>
-
             <label>CVV
-              <input type="text" required placeholder="123" maxlength="4" />
+              <input type="text" id="cvv" required placeholder="123" maxlength="4" />
             </label>
           </div>
-
           <label>Correo para confirmación
-            <input type="email" required placeholder="ejemplo@correo.com" />
+            <input type="email" id="correo-confirmacion" required placeholder="ejemplo@correo.com" />
           </label>
-
           <button type="submit" class="pro-btn pro-btn-primary full-btn">Finalizar compra</button>
         </form>
       </div>
-
       <aside class="summary-panel">
         <h2>Resumen final</h2>
         <div class="summary-row">
           <span>Productos</span>
           <span id="checkout-items">0</span>
         </div>
-        <div class="summary-row">
+        <div class="summary-row total">
           <span>Total</span>
           <span id="checkout-total">$0</span>
         </div>
-
         <div class="summary-note" id="address-preview">
           Cargando dirección...
         </div>
@@ -75,7 +66,22 @@
     </section>
   </main>
 
-  <script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBQ-TIBlQMBo_Q5Qf6QFCKwzII3GJQ4MyI",
+      authDomain: "autopartes-store.firebaseapp.com",
+      projectId: "autopartes-store",
+      storageBucket: "autopartes-store.firebasestorage.app",
+      messagingSenderId: "98732617446",
+      appId: "1:98732617446:web:437926fe4dcbdb984c5527"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
     function formatPrice(price) {
       return new Intl.NumberFormat("es-MX", {
         style: "currency",
@@ -99,7 +105,6 @@
       document.getElementById("checkout-total").textContent = formatPrice(totalPrice);
 
       const addressPreview = document.getElementById("address-preview");
-
       if (address) {
         addressPreview.innerHTML = `
           <strong>Enviar a:</strong><br>
@@ -114,11 +119,40 @@
       }
     }
 
-    document.getElementById("checkout-form").addEventListener("submit", function (e) {
+    document.getElementById("checkout-form").addEventListener("submit", async function (e) {
       e.preventDefault();
-      alert("Compra realizada correctamente.");
-      localStorage.removeItem("cart");
-      window.location.href = "index.html";
+
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const address = JSON.parse(localStorage.getItem("shippingAddress")) || {};
+      const usuario = JSON.parse(localStorage.getItem("usuarioActivo")) || {};
+
+      let totalPrice = 0;
+      cart.forEach(item => totalPrice += item.price * item.quantity);
+
+      try {
+        // Guardar compra en Firestore
+        await addDoc(collection(db, "compras"), {
+          usuarioUid: usuario.uid || "invitado",
+          usuarioCorreo: usuario.correo || document.getElementById("correo-confirmacion").value,
+          productos: cart.map(item => ({
+            id: item.id,
+            nombre: item.name,
+            precio: item.price,
+            cantidad: item.quantity
+          })),
+          direccion: address,
+          total: totalPrice,
+          fecha: new Date().toISOString(),
+          estado: "pendiente"
+        });
+
+        alert("✅ ¡Compra realizada correctamente! Recibirás confirmación por correo.");
+        localStorage.removeItem("cart");
+        window.location.href = "index.html";
+
+      } catch (error) {
+        alert("Error al procesar la compra: " + error.message);
+      }
     });
 
     loadCheckoutData();
