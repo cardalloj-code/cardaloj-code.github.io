@@ -3,110 +3,257 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Autopartes Store</title>
+  <title>Autopartes Store | Refacciones y Accesorios</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="logo">Autopartes Store</div>
 
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="logo">⚙️ Autopartes Store</div>
     <div class="topbar-right">
       <div class="search-box">
-        <input type="text" id="search-input" placeholder="Buscar autopartes..." />
-        <button id="search-btn">Buscar</button>
+        <input type="text" id="search-input" placeholder="Buscar autopartes, marca, modelo..." />
+        <button id="search-btn">🔍 Buscar</button>
       </div>
-
       <nav class="nav pro-nav">
         <a href="index.html" class="nav-link active">Inicio</a>
-        <a href="cart.html" class="nav-link">Carrito</a>
-        <a href="login.html" class="nav-link">Iniciar sesión</a>
-        <a href="register.html" class="nav-link nav-highlight">Registrarse</a>
+        <a href="cart.html" class="nav-link">🛒 Carrito</a>
+        <a href="login.html" class="nav-link" id="nav-sesion">Iniciar sesión</a>
+        <a href="register.html" class="nav-link nav-highlight" id="nav-registro">Registrarse</a>
       </nav>
     </div>
   </header>
 
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-bar-inner">
+      <span>🚚 Envío gratis en compras mayores a $800 MXN</span>
+      <span>🔒 Pago 100% seguro</span>
+      <span>⭐ Productos verificados</span>
+      <span>📦 Devoluciones hasta 3 días</span>
+      <span>📞 Soporte: 55 1234 5678</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1>Las mejores autopartes para tu vehículo</h1>
-      <p>
-        Encuentra calaveras, parrillas, reflejantes, cuartos, llaves y más accesorios
-        para diferentes marcas y modelos.
-      </p>
-      <a href="#productos" class="hero-btn">Ver productos</a>
+      <span class="hero-chip">🏆 #1 en autopartes en México</span>
+      <h1>Las mejores autopartes<br/>para tu vehículo</h1>
+      <p>Calaveras, parrillas, reflejantes, cuartos, accesorios y más para distintas marcas y modelos. Envío a toda la República.</p>
+      <div class="hero-btns">
+        <a href="#productos" class="hero-btn">Ver productos</a>
+        <a href="#categorias" class="hero-btn hero-btn-outline">Ver categorías</a>
+      </div>
     </div>
   </section>
 
+  <!-- BENEFICIOS -->
+  <section class="benefits-section">
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🚚</div>
+        <h3>Envío rápido</h3>
+        <p>Entrega de 2 a 5 días hábiles en toda la República Mexicana.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">✅</div>
+        <h3>Calidad garantizada</h3>
+        <p>Todos nuestros productos pasan control de calidad antes de enviarse.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🔄</div>
+        <h3>Devoluciones fáciles</h3>
+        <p>Si hay un defecto de fábrica, tienes 3 días para reportarlo sin problemas.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">💬</div>
+        <h3>Soporte al cliente</h3>
+        <p>Asesoría por teléfono, WhatsApp o correo para ayudarte con tu compra.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORÍAS -->
+  <section class="categorias-section" id="categorias">
+    <div class="section-header">
+      <span class="section-chip">Explora</span>
+      <h2>Categorías principales</h2>
+      <p class="section-text">Filtra por tipo de autoparte para encontrar lo que necesitas más rápido.</p>
+    </div>
+    <div class="categorias-grid">
+      <button class="cat-btn active" onclick="filtrarCategoria('todas')">🔧 Todas</button>
+      <button class="cat-btn" onclick="filtrarCategoria('Iluminación')">💡 Iluminación</button>
+      <button class="cat-btn" onclick="filtrarCategoria('Exterior')">🚗 Exterior</button>
+      <button class="cat-btn" onclick="filtrarCategoria('Interior')">🪑 Interior</button>
+      <button class="cat-btn" onclick="filtrarCategoria('Accesorios')">🔑 Accesorios</button>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS -->
   <main class="main-content">
     <section class="products-section" id="productos">
-      <h2>Lo que vendemos</h2>
-      <p class="section-text">
-        Encuentra autopartes y accesorios con buen precio y compatibilidad para diferentes vehículos.
-      </p>
+      <div class="section-header">
+        <span class="section-chip">Catálogo</span>
+        <h2>Lo que vendemos</h2>
+        <p class="section-text">Autopartes y accesorios con buen precio y compatibilidad para diferentes vehículos.</p>
+      </div>
       <div id="products-container" class="products-grid"></div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="footer-grid">
-      <div>
-        <h4>Autopartes Store</h4>
-        <p>Accesorios y autopartes para distintos modelos y marcas.</p>
+  <!-- SECCIÓN CALIDAD -->
+  <section class="quality-section">
+    <div class="quality-inner">
+      <div class="quality-text">
+        <span class="section-chip">Nuestro compromiso</span>
+        <h2>¿Por qué elegir Autopartes Store?</h2>
+        <ul class="quality-list">
+          <li>✅ Más de 5 años de experiencia en el mercado</li>
+          <li>✅ Productos revisados y verificados antes del envío</li>
+          <li>✅ Compatibilidad confirmada con marcas reales</li>
+          <li>✅ Precios competitivos en pesos mexicanos</li>
+          <li>✅ Asesoría personalizada para cada cliente</li>
+          <li>✅ Embalaje seguro para evitar daños en el envío</li>
+        </ul>
       </div>
-
-      <div>
-        <h4>Contacto</h4>
-        <p>Teléfono: 55 1234 5678</p>
-        <p>Correo: autopartesstore@email.com</p>
-      </div>
-
-      <div>
-        <h4>Ubicación</h4>
-        <p>Av. Principal #123</p>
-        <p>Ciudad de México, México</p>
-      </div>
-
-      <div>
-        <h4>Información</h4>
-
-        <div class="policy-item">
-          <button class="policy-toggle">Políticas de privacidad</button>
-          <div class="policy-content">
-            <p>
-              La información personal proporcionada por el cliente será utilizada únicamente
-              para procesar pedidos, mejorar la atención y brindar seguimiento a las compras.
-              No compartimos datos personales con terceros sin autorización.
-            </p>
-          </div>
+      <div class="quality-badges">
+        <div class="badge-card">
+          <div class="badge-num">+500</div>
+          <div class="badge-label">Clientes satisfechos</div>
         </div>
-
-        <div class="policy-item">
-          <button class="policy-toggle">Políticas de pago</button>
-          <div class="policy-content">
-            <p>
-              Aceptamos pagos mediante transferencia, tarjeta y métodos autorizados en la tienda.
-              Todos los pagos deben ser verificados antes del envío o entrega del producto.
-            </p>
-          </div>
+        <div class="badge-card">
+          <div class="badge-num">+100</div>
+          <div class="badge-label">Productos disponibles</div>
         </div>
-
-        <div class="policy-item">
-          <button class="policy-toggle">Políticas de devolución</button>
-          <div class="policy-content">
-            <p>
-              Las devoluciones aplican únicamente por defecto de fábrica o error en el producto entregado.
-              El cliente debe reportarlo dentro de los primeros 3 días después de recibir su pedido.
-              El producto debe conservarse en buen estado y sin daños por uso indebido.
-            </p>
-          </div>
+        <div class="badge-card">
+          <div class="badge-num">5★</div>
+          <div class="badge-label">Calificación promedio</div>
+        </div>
+        <div class="badge-card">
+          <div class="badge-num">3 días</div>
+          <div class="badge-label">Política de devolución</div>
         </div>
       </div>
     </div>
+  </section>
 
-    <p class="footer-copy">Autopartes Store © 2026 - Todos los derechos reservados</p>
+  <!-- POLÍTICAS -->
+  <section class="policies-section">
+    <div class="section-header">
+      <span class="section-chip">Información importante</span>
+      <h2>Políticas de la tienda</h2>
+    </div>
+    <div class="policies-grid">
+      <div class="policy-card">
+        <div class="policy-icon">🔒</div>
+        <h3>Privacidad de datos</h3>
+        <p>La información personal proporcionada por el cliente se utiliza únicamente para procesar pedidos y dar seguimiento a las compras. No compartimos datos con terceros sin autorización.</p>
+      </div>
+      <div class="policy-card">
+        <div class="policy-icon">💳</div>
+        <h3>Métodos de pago</h3>
+        <p>Aceptamos tarjeta de crédito, débito y transferencia bancaria. Todos los pagos son verificados antes del envío del producto para tu seguridad.</p>
+      </div>
+      <div class="policy-card">
+        <div class="policy-icon">🔄</div>
+        <h3>Devoluciones</h3>
+        <p>Las devoluciones aplican únicamente por defecto de fábrica o error en el producto. El cliente tiene 3 días después de recibir su pedido para reportarlo en buen estado.</p>
+      </div>
+      <div class="policy-card">
+        <div class="policy-icon">🚚</div>
+        <h3>Envíos</h3>
+        <p>Realizamos envíos a toda la República Mexicana. El tiempo estimado es de 2 a 5 días hábiles. Envío gratis en compras mayores a $800 MXN.</p>
+      </div>
+      <div class="policy-card">
+        <div class="policy-icon">⭐</div>
+        <h3>Garantía de calidad</h3>
+        <p>Todos nuestros productos son revisados antes del envío. Si el producto llega dañado por el transporte, lo resolvemos sin costo adicional para el cliente.</p>
+      </div>
+      <div class="policy-card">
+        <div class="policy-icon">📞</div>
+        <h3>Atención al cliente</h3>
+        <p>Nuestro equipo está disponible de lunes a sábado de 9am a 6pm. Puedes contactarnos por teléfono, WhatsApp o correo electrónico para cualquier duda.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <h4>⚙️ Autopartes Store</h4>
+        <p>Especialistas en refacciones y accesorios para automóviles. Servicio profesional con más de 5 años de experiencia.</p>
+        <p style="margin-top:12px; color:#94a3b8; font-size:13px;">RFC: AS260101XXX</p>
+      </div>
+      <div>
+        <h4>Navegación</h4>
+        <p><a href="index.html" style="color:#dce5ff; text-decoration:none;">🏠 Inicio</a></p>
+        <p><a href="cart.html" style="color:#dce5ff; text-decoration:none;">🛒 Carrito</a></p>
+        <p><a href="login.html" style="color:#dce5ff; text-decoration:none;">🔑 Iniciar sesión</a></p>
+        <p><a href="register.html" style="color:#dce5ff; text-decoration:none;">📝 Registrarse</a></p>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <p>📞 Teléfono: 55 1234 5678</p>
+        <p>📱 WhatsApp: 55 1234 5678</p>
+        <p>✉️ autopartesstore@email.com</p>
+        <p>🕐 Lun–Sáb: 9am – 6pm</p>
+      </div>
+      <div>
+        <h4>Ubicación</h4>
+        <p>📍 Av. Principal #123</p>
+        <p>Col. Centro, Ciudad de México</p>
+        <p>CP 06000, CDMX, México</p>
+        <br/>
+        <p style="color:#94a3b8; font-size:13px;">Envíos a toda la República</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Autopartes Store © 2026 — Todos los derechos reservados</p>
+      <p style="font-size:13px; color:#64748b; margin-top:6px;">Diseñado y desarrollado con ❤️ en México</p>
+    </div>
   </footer>
 
   <script src="products.js"></script>
   <script src="script.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBQ-TIBlQMBo_Q5Qf6QFCKwzII3GJQ4MyI",
+      authDomain: "autopartes-store.firebaseapp.com",
+      projectId: "autopartes-store",
+      storageBucket: "autopartes-store.firebasestorage.app",
+      messagingSenderId: "98732617446",
+      appId: "1:98732617446:web:437926fe4dcbdb984c5527"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Detectar si hay sesión activa y cambiar nav
+    onAuthStateChanged(auth, (user) => {
+      const navSesion = document.getElementById("nav-sesion");
+      const navRegistro = document.getElementById("nav-registro");
+      if (user) {
+        navSesion.textContent = "Cerrar sesión";
+        navSesion.href = "#";
+        navRegistro.style.display = "none";
+        navSesion.addEventListener("click", async (e) => {
+          e.preventDefault();
+          await signOut(auth);
+          localStorage.removeItem("usuarioActivo");
+          window.location.reload();
+        });
+      }
+    });
+  </script>
+
 </body>
 </html>
