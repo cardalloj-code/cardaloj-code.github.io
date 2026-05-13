@@ -6,6 +6,9 @@
   <title>Panel Admin | Autopartes Store</title>
   <link rel="stylesheet" href="style.css" />
   <style>
+    body { background: #f1f5f9; }
+
+    /* LOGIN */
     .admin-login {
       min-height: 100vh;
       display: flex;
@@ -36,6 +39,7 @@
       margin-bottom: 16px;
       text-align: center;
       letter-spacing: 4px;
+      font-family: inherit;
     }
     .admin-login-card input::placeholder { letter-spacing: 0; color: #475569; }
     .admin-login-card button {
@@ -48,17 +52,24 @@
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
+      font-family: inherit;
     }
+
+    /* PANEL */
     .admin-panel { display: none; }
     .admin-header {
       background: #0a1628;
       color: white;
-      padding: 18px 32px;
+      padding: 16px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-    .admin-header h1 { font-size: 20px; font-weight: 800; }
+    .admin-header h1 { font-size: 18px; font-weight: 800; }
+    .admin-header-btns { display: flex; gap: 10px; }
     .admin-header button {
       background: #dc2626;
       color: white;
@@ -67,51 +78,32 @@
       border-radius: 8px;
       cursor: pointer;
       font-weight: 700;
+      font-family: inherit;
     }
-    .admin-body { padding: 32px; max-width: 1400px; margin: 0 auto; }
+
+    .admin-body { padding: 28px 32px; max-width: 1400px; margin: 0 auto; }
+
+    /* STATS */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin-bottom: 40px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 18px;
+      margin-bottom: 32px;
     }
     .stat-card {
       background: white;
       border-radius: 16px;
-      padding: 24px;
+      padding: 22px;
       text-align: center;
-      box-shadow: 0 4px 18px rgba(15,23,42,0.08);
+      box-shadow: 0 4px 14px rgba(15,23,42,0.07);
     }
-    .stat-num { font-size: 36px; font-weight: 900; color: #ea580c; }
-    .stat-label { font-size: 14px; color: #64748b; font-weight: 600; margin-top: 4px; }
-    .admin-section { background: white; border-radius: 18px; padding: 28px; margin-bottom: 28px; box-shadow: 0 4px 18px rgba(15,23,42,0.08); }
-    .admin-section h2 { font-size: 20px; font-weight: 800; color: #0f172a; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; }
-    table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 12px 16px; text-align: left; border-bottom: 2px solid #e2e8f0; }
-    td { padding: 14px 16px; border-bottom: 1px solid #f1f5f9; color: #334155; vertical-align: top; }
-    tr:hover td { background: #fafbff; }
-    .estado-badge {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-    .estado-pendiente { background: #fef9c3; color: #854d0e; }
-    .estado-enviado { background: #dbeafe; color: #1e40af; }
-    .estado-entregado { background: #dcfce7; color: #166534; }
-    .estado-select {
-      padding: 6px 10px;
-      border-radius: 8px;
-      border: 1px solid #e2e8f0;
-      font-size: 13px;
-      cursor: pointer;
-      background: white;
-    }
-    .empty-admin { text-align: center; padding: 40px; color: #94a3b8; }
-    .tabs { display: flex; gap: 10px; margin-bottom: 28px; }
+    .stat-num { font-size: 32px; font-weight: 900; color: #ea580c; }
+    .stat-label { font-size: 13px; color: #64748b; font-weight: 600; margin-top: 4px; }
+
+    /* TABS */
+    .tabs { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
     .tab-btn {
-      padding: 10px 24px;
+      padding: 10px 22px;
       border-radius: 999px;
       border: 2px solid #e2e8f0;
       background: white;
@@ -120,31 +112,159 @@
       font-size: 14px;
       cursor: pointer;
       transition: 0.2s;
+      font-family: inherit;
     }
     .tab-btn.active { background: #0a1628; color: white; border-color: #0a1628; }
     .tab-content { display: none; }
     .tab-content.active { display: block; }
+
+    /* SECCIÓN */
+    .admin-section {
+      background: white;
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 14px rgba(15,23,42,0.07);
+    }
+    .admin-section h2 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 12px;
+    }
+
+    /* TABLA */
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 12px 14px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; vertical-align: middle; }
+    tr:hover td { background: #fafbff; }
+
+    .estado-badge { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+    .estado-pendiente { background: #fef9c3; color: #854d0e; }
+    .estado-enviado { background: #dbeafe; color: #1e40af; }
+    .estado-entregado { background: #dcfce7; color: #166534; }
+
+    .estado-select {
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      font-size: 13px;
+      cursor: pointer;
+      background: white;
+      font-family: inherit;
+    }
+
+    /* STOCK */
+    .stock-input {
+      width: 70px;
+      padding: 6px 10px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      font-family: inherit;
+      outline: none;
+    }
+    .stock-input:focus { border-color: #f59e0b; }
+    .btn-guardar-stock {
+      padding: 6px 14px;
+      background: #16a34a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: 0.2s;
+    }
+    .btn-guardar-stock:hover { background: #15803d; }
+    .btn-eliminar {
+      padding: 6px 12px;
+      background: #fee2e2;
+      color: #dc2626;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    /* FORM NUEVO PRODUCTO */
+    .form-nuevo-producto {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-nuevo-producto .full { grid-column: 1 / -1; }
+    .form-nuevo-producto label { font-size: 13px; font-weight: 700; color: #475569; display: block; margin-bottom: 6px; }
+    .form-nuevo-producto input,
+    .form-nuevo-producto select,
+    .form-nuevo-producto textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 14px;
+      outline: none;
+      font-family: inherit;
+      background: #f8fafc;
+      transition: 0.2s;
+    }
+    .form-nuevo-producto input:focus,
+    .form-nuevo-producto select:focus,
+    .form-nuevo-producto textarea:focus {
+      border-color: #f59e0b;
+      background: white;
+    }
+    .btn-agregar-producto {
+      padding: 13px 28px;
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      margin-top: 8px;
+    }
+
+    .empty-admin { text-align: center; padding: 40px; color: #94a3b8; font-size: 15px; }
+
+    @media (max-width: 768px) {
+      .admin-body { padding: 20px 16px; }
+      .form-nuevo-producto { grid-template-columns: 1fr; }
+      .form-nuevo-producto .full { grid-column: 1; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- LOGIN ADMIN -->
+  <!-- LOGIN -->
   <div class="admin-login" id="admin-login">
     <div class="admin-login-card">
       <div style="font-size:48px; margin-bottom:16px;">🔐</div>
       <h1>Panel Administrador</h1>
       <p>Ingresa la contraseña para acceder</p>
       <input type="password" id="admin-password" placeholder="Contraseña" />
-      <button onclick="verificarPassword()">Entrar</button>
+      <button onclick="verificarPassword()">Entrar al panel</button>
       <p style="margin-top:16px; color:#475569; font-size:12px;">Solo personal autorizado</p>
     </div>
   </div>
 
-  <!-- PANEL ADMIN -->
+  <!-- PANEL -->
   <div class="admin-panel" id="admin-panel">
     <div class="admin-header">
-      <h1>⚙️ Panel Administrador — Autopartes Store</h1>
-      <button onclick="cerrarAdmin()">🚪 Salir</button>
+      <h1>⚙️ Panel Admin — Autopartes Store</h1>
+      <div class="admin-header-btns">
+        <button onclick="window.location.href='index.html'" style="background:#1e40af;">🏠 Ver tienda</button>
+        <button onclick="cerrarAdmin()">🚪 Salir</button>
+      </div>
     </div>
 
     <div class="admin-body">
@@ -157,15 +277,19 @@
         </div>
         <div class="stat-card">
           <div class="stat-num" id="stat-usuarios">0</div>
-          <div class="stat-label">👥 Usuarios registrados</div>
+          <div class="stat-label">👥 Usuarios</div>
         </div>
         <div class="stat-card">
           <div class="stat-num" id="stat-ventas">$0</div>
-          <div class="stat-label">💰 Total en ventas</div>
+          <div class="stat-label">💰 Total ventas</div>
         </div>
         <div class="stat-card">
           <div class="stat-num" id="stat-pendientes">0</div>
-          <div class="stat-label">⏳ Pedidos pendientes</div>
+          <div class="stat-label">⏳ Pendientes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-productos">0</div>
+          <div class="stat-label">🔧 Productos</div>
         </div>
       </div>
 
@@ -173,6 +297,8 @@
       <div class="tabs">
         <button class="tab-btn active" onclick="cambiarTab('pedidos', this)">📦 Pedidos</button>
         <button class="tab-btn" onclick="cambiarTab('usuarios', this)">👥 Usuarios</button>
+        <button class="tab-btn" onclick="cambiarTab('stock', this)">📊 Stock</button>
+        <button class="tab-btn" onclick="cambiarTab('nuevo', this)">➕ Nuevo producto</button>
       </div>
 
       <!-- TAB PEDIDOS -->
@@ -191,12 +317,69 @@
         </div>
       </div>
 
+      <!-- TAB STOCK -->
+      <div class="tab-content" id="tab-stock">
+        <div class="admin-section">
+          <h2>📊 Gestión de stock</h2>
+          <p style="color:#64748b; font-size:14px; margin-bottom:20px;">Edita el stock de cada producto y guarda los cambios.</p>
+          <div id="tabla-stock"><div class="empty-admin">Cargando productos...</div></div>
+        </div>
+      </div>
+
+      <!-- TAB NUEVO PRODUCTO -->
+      <div class="tab-content" id="tab-nuevo">
+        <div class="admin-section">
+          <h2>➕ Agregar nuevo producto</h2>
+          <div class="form-nuevo-producto">
+            <label>Nombre del producto
+              <input type="text" id="np-nombre" placeholder="Ej. Par Calaveras LED" />
+            </label>
+            <label>Categoría
+              <select id="np-categoria">
+                <option value="Iluminación">💡 Iluminación</option>
+                <option value="Exterior">🚗 Exterior</option>
+                <option value="Interior">🪑 Interior</option>
+                <option value="Accesorios">🔑 Accesorios</option>
+              </select>
+            </label>
+            <label>Precio (MXN)
+              <input type="number" id="np-precio" placeholder="Ej. 850" />
+            </label>
+            <label>Stock (piezas)
+              <input type="number" id="np-stock" placeholder="Ej. 10" />
+            </label>
+            <label>Compatibilidad
+              <input type="text" id="np-compatibilidad" placeholder="Ej. Volkswagen Jetta 2018-2023" />
+            </label>
+            <label>Precio extra (opcional)
+              <input type="text" id="np-extra" placeholder="Ej. Pieza: $200" />
+            </label>
+            <label class="full">Descripción corta
+              <input type="text" id="np-desc-corta" placeholder="Resumen del producto en una línea" />
+            </label>
+            <label class="full">Descripción completa
+              <textarea id="np-descripcion" rows="3" placeholder="Descripción detallada del producto..."></textarea>
+            </label>
+            <label class="full">URL de imagen
+              <input type="text" id="np-imagen" placeholder="https://... o images/mi-imagen.jpg" />
+            </label>
+            <div class="full">
+              <button class="btn-agregar-producto" onclick="agregarProducto()">➕ Agregar producto</button>
+            </div>
+          </div>
+          <div id="lista-productos-admin" style="margin-top:32px;"></div>
+        </div>
+      </div>
+
     </div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+    import {
+      getFirestore, collection, getDocs, doc,
+      updateDoc, addDoc, deleteDoc, query, orderBy
+    } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBQ-TIBlQMBo_Q5Qf6QFCKwzII3GJQ4MyI",
@@ -210,127 +393,119 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // CONTRASEÑA ADMIN
     const PASSWORD_ADMIN = "admin2026";
 
-    window.verificarPassword = function() {
+    function formatPrice(p) {
+      return new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(p);
+    }
+
+    function formatFecha(iso) {
+      return new Date(iso).toLocaleDateString("es-MX", {
+        day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"
+      });
+    }
+
+    window.verificarPassword = function () {
       const input = document.getElementById("admin-password").value;
       if (input === PASSWORD_ADMIN) {
         document.getElementById("admin-login").style.display = "none";
         document.getElementById("admin-panel").style.display = "block";
-        cargarDatos();
+        cargarTodo();
       } else {
         alert("❌ Contraseña incorrecta.");
         document.getElementById("admin-password").value = "";
       }
     };
 
-    window.cerrarAdmin = function() {
+    window.cerrarAdmin = function () {
       window.location.href = "index.html";
     };
 
-    window.cambiarTab = function(tab, btn) {
+    window.cambiarTab = function (tab, btn) {
       document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
       document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
       document.getElementById("tab-" + tab).classList.add("active");
       btn.classList.add("active");
     };
 
-    function formatPrice(price) {
-      return new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(price);
-    }
-
-    function formatFecha(isoString) {
-      const fecha = new Date(isoString);
-      return fecha.toLocaleDateString("es-MX", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
-    }
-
-    async function cargarDatos() {
+    async function cargarTodo() {
       await cargarPedidos();
       await cargarUsuarios();
+      await cargarStock();
+      await cargarProductosAdmin();
     }
 
+    // ---- PEDIDOS ----
     async function cargarPedidos() {
-      const snapshot = await getDocs(collection(db, "compras"));
+      const snap = await getDocs(collection(db, "compras"));
       const pedidos = [];
-      snapshot.forEach(doc => pedidos.push({ docId: doc.id, ...doc.data() }));
+      snap.forEach(d => pedidos.push({ docId: d.id, ...d.data() }));
 
-      // Estadísticas
       document.getElementById("stat-pedidos").textContent = pedidos.length;
-      const totalVentas = pedidos.reduce((sum, p) => sum + (p.total || 0), 0);
-      document.getElementById("stat-ventas").textContent = formatPrice(totalVentas);
-      const pendientes = pedidos.filter(p => p.estado === "pendiente").length;
-      document.getElementById("stat-pendientes").textContent = pendientes;
+      const total = pedidos.reduce((s, p) => s + (p.total || 0), 0);
+      document.getElementById("stat-ventas").textContent = formatPrice(total);
+      document.getElementById("stat-pendientes").textContent = pedidos.filter(p => p.estado === "pendiente").length;
 
       if (!pedidos.length) {
         document.getElementById("tabla-pedidos").innerHTML = `<div class="empty-admin">No hay pedidos aún.</div>`;
         return;
       }
 
-      // Ordenar por fecha más reciente
       pedidos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
 
-      let html = `<table>
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Cliente</th>
-            <th>Productos</th>
-            <th>Dirección</th>
-            <th>Total</th>
-            <th>Estado</th>
-          </tr>
-        </thead>
-        <tbody>`;
+      let html = `<div style="overflow-x:auto"><table>
+        <thead><tr>
+          <th>Fecha</th><th>Cliente</th><th>Productos</th><th>Dirección</th><th>Total</th><th>Estado</th>
+        </tr></thead><tbody>`;
 
-      pedidos.forEach(pedido => {
-        const productos = pedido.productos?.map(p => `${p.nombre} x${p.cantidad}`).join("<br>") || "—";
-        const dir = pedido.direccion;
-        const direccion = dir ? `${dir.fullname}<br>${dir.street}<br>${dir.city}, ${dir.state}` : "—";
-
+      pedidos.forEach(p => {
+        const prods = p.productos?.map(x => `${x.nombre} x${x.cantidad}`).join("<br>") || "—";
+        const dir = p.direccion;
+        const dirText = dir ? `${dir.fullname}<br>${dir.street}<br>${dir.city}, ${dir.state}` : "—";
         html += `<tr>
-          <td>${formatFecha(pedido.fecha)}</td>
-          <td>${pedido.usuarioCorreo || "Invitado"}</td>
-          <td>${productos}</td>
-          <td>${direccion}</td>
-          <td><strong>${formatPrice(pedido.total || 0)}</strong></td>
+          <td>${formatFecha(p.fecha)}</td>
+          <td>${p.usuarioCorreo || "Invitado"}</td>
+          <td>${prods}</td>
+          <td>${dirText}</td>
+          <td><strong>${formatPrice(p.total || 0)}</strong></td>
           <td>
-            <select class="estado-select" onchange="cambiarEstado('${pedido.docId}', this.value)">
-              <option value="pendiente" ${pedido.estado === "pendiente" ? "selected" : ""}>⏳ Pendiente</option>
-              <option value="enviado" ${pedido.estado === "enviado" ? "selected" : ""}>🚚 Enviado</option>
-              <option value="entregado" ${pedido.estado === "entregado" ? "selected" : ""}>✅ Entregado</option>
+            <select class="estado-select" onchange="cambiarEstado('${p.docId}', this.value)">
+              <option value="pendiente" ${p.estado === "pendiente" ? "selected" : ""}>⏳ Pendiente</option>
+              <option value="enviado" ${p.estado === "enviado" ? "selected" : ""}>🚚 Enviado</option>
+              <option value="entregado" ${p.estado === "entregado" ? "selected" : ""}>✅ Entregado</option>
             </select>
           </td>
         </tr>`;
       });
 
-      html += `</tbody></table>`;
+      html += `</tbody></table></div>`;
       document.getElementById("tabla-pedidos").innerHTML = html;
     }
 
+    window.cambiarEstado = async function (docId, estado) {
+      try {
+        await updateDoc(doc(db, "compras", docId), { estado });
+        alert(`✅ Estado actualizado: ${estado}`);
+      } catch (e) {
+        alert("Error: " + e.message);
+      }
+    };
+
+    // ---- USUARIOS ----
     async function cargarUsuarios() {
-      const snapshot = await getDocs(collection(db, "usuarios"));
+      const snap = await getDocs(collection(db, "usuarios"));
       const usuarios = [];
-      snapshot.forEach(doc => usuarios.push({ uid: doc.id, ...doc.data() }));
+      snap.forEach(d => usuarios.push({ uid: d.id, ...d.data() }));
 
       document.getElementById("stat-usuarios").textContent = usuarios.length;
 
       if (!usuarios.length) {
-        document.getElementById("tabla-usuarios").innerHTML = `<div class="empty-admin">No hay usuarios registrados.</div>`;
+        document.getElementById("tabla-usuarios").innerHTML = `<div class="empty-admin">No hay usuarios.</div>`;
         return;
       }
 
-      let html = `<table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>Fecha de registro</th>
-            <th>Rol</th>
-          </tr>
-        </thead>
-        <tbody>`;
-
+      let html = `<div style="overflow-x:auto"><table>
+        <thead><tr><th>Nombre</th><th>Correo</th><th>Fecha registro</th><th>Rol</th></tr></thead><tbody>`;
       usuarios.forEach(u => {
         html += `<tr>
           <td>${u.nombre || "—"}</td>
@@ -339,25 +514,154 @@
           <td><span class="estado-badge estado-entregado">${u.rol || "cliente"}</span></td>
         </tr>`;
       });
-
-      html += `</tbody></table>`;
+      html += `</tbody></table></div>`;
       document.getElementById("tabla-usuarios").innerHTML = html;
     }
 
-    window.cambiarEstado = async function(docId, nuevoEstado) {
+    // ---- STOCK ----
+    async function cargarStock() {
+      const snap = await getDocs(collection(db, "productos_extra"));
+      const productosFirestore = {};
+      snap.forEach(d => productosFirestore[d.id] = { docId: d.id, ...d.data() });
+
+      // Combinar con products.js
+      const lista = typeof PRODUCTS !== "undefined" ? [...PRODUCTS] : [];
+
+      document.getElementById("stat-productos").textContent = lista.length;
+
+      if (!lista.length) {
+        document.getElementById("tabla-stock").innerHTML = `<div class="empty-admin">No hay productos.</div>`;
+        return;
+      }
+
+      let html = `<div style="overflow-x:auto"><table>
+        <thead><tr><th>ID</th><th>Producto</th><th>Categoría</th><th>Precio</th><th>Stock actual</th><th>Guardar</th></tr></thead><tbody>`;
+
+      lista.forEach(p => {
+        const stockActual = productosFirestore[`prod_${p.id}`]?.stock ?? p.stock ?? 0;
+        html += `<tr>
+          <td>#${p.id}</td>
+          <td>${p.name}</td>
+          <td>${p.category}</td>
+          <td>${formatPrice(p.price)}</td>
+          <td><input type="number" class="stock-input" id="stock-${p.id}" value="${stockActual}" min="0" /></td>
+          <td><button class="btn-guardar-stock" onclick="guardarStock(${p.id})">💾 Guardar</button></td>
+        </tr>`;
+      });
+
+      html += `</tbody></table></div>`;
+      document.getElementById("tabla-stock").innerHTML = html;
+    }
+
+    window.guardarStock = async function (id) {
+      const input = document.getElementById(`stock-${id}`);
+      const nuevoStock = parseInt(input.value);
+      if (isNaN(nuevoStock) || nuevoStock < 0) {
+        alert("Ingresa un número válido.");
+        return;
+      }
       try {
-        await updateDoc(doc(db, "compras", docId), { estado: nuevoEstado });
-        alert(`✅ Estado actualizado a: ${nuevoEstado}`);
-      } catch (error) {
-        alert("Error al actualizar: " + error.message);
+        await updateDoc(doc(db, "productos_extra", `prod_${id}`), { stock: nuevoStock })
+          .catch(async () => {
+            const { setDoc } = await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js");
+            await setDoc(doc(db, "productos_extra", `prod_${id}`), { stock: nuevoStock });
+          });
+        alert(`✅ Stock del producto #${id} actualizado a ${nuevoStock} piezas.`);
+      } catch (e) {
+        alert("Error: " + e.message);
       }
     };
 
-    // Enter en el input de contraseña
-    document.getElementById("admin-password").addEventListener("keydown", function(e) {
+    // ---- NUEVO PRODUCTO ----
+    async function cargarProductosAdmin() {
+      const snap = await getDocs(collection(db, "productos_nuevos"));
+      const productos = [];
+      snap.forEach(d => productos.push({ docId: d.id, ...d.data() }));
+
+      if (!productos.length) {
+        document.getElementById("lista-productos-admin").innerHTML = "";
+        return;
+      }
+
+      let html = `<h3 style="font-size:16px; font-weight:800; color:#0f172a; margin-bottom:16px;">Productos agregados desde el panel:</h3>
+        <div style="overflow-x:auto"><table>
+        <thead><tr><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Eliminar</th></tr></thead><tbody>`;
+
+      productos.forEach(p => {
+        html += `<tr>
+          <td>${p.name}</td>
+          <td>${p.category}</td>
+          <td>${formatPrice(p.price)}</td>
+          <td>${p.stock}</td>
+          <td><button class="btn-eliminar" onclick="eliminarProducto('${p.docId}')">🗑️ Eliminar</button></td>
+        </tr>`;
+      });
+
+      html += `</tbody></table></div>`;
+      document.getElementById("lista-productos-admin").innerHTML = html;
+    }
+
+    window.agregarProducto = async function () {
+      const nombre = document.getElementById("np-nombre").value.trim();
+      const categoria = document.getElementById("np-categoria").value;
+      const precio = parseFloat(document.getElementById("np-precio").value);
+      const stock = parseInt(document.getElementById("np-stock").value);
+      const compatibilidad = document.getElementById("np-compatibilidad").value.trim();
+      const extra = document.getElementById("np-extra").value.trim();
+      const descCorta = document.getElementById("np-desc-corta").value.trim();
+      const descripcion = document.getElementById("np-descripcion").value.trim();
+      const imagen = document.getElementById("np-imagen").value.trim();
+
+      if (!nombre || !precio || !stock || !compatibilidad || !descCorta) {
+        alert("Por favor llena los campos obligatorios: nombre, precio, stock, compatibilidad y descripción corta.");
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "productos_nuevos"), {
+          name: nombre,
+          category: categoria,
+          price: precio,
+          stock: stock,
+          compatibility: compatibilidad,
+          extraPriceText: extra,
+          shortDescription: descCorta,
+          description: descripcion,
+          image: imagen || "https://placehold.co/400x220/dde4ee/64748b?text=Sin+imagen",
+          fechaAgregado: new Date().toISOString()
+        });
+
+        alert(`✅ Producto "${nombre}" agregado correctamente.`);
+
+        // Limpiar formulario
+        ["np-nombre","np-precio","np-stock","np-compatibilidad","np-extra","np-desc-corta","np-descripcion","np-imagen"].forEach(id => {
+          document.getElementById(id).value = "";
+        });
+
+        await cargarProductosAdmin();
+
+      } catch (e) {
+        alert("Error al agregar: " + e.message);
+      }
+    };
+
+    window.eliminarProducto = async function (docId) {
+      if (!confirm("¿Seguro que quieres eliminar este producto?")) return;
+      try {
+        await deleteDoc(doc(db, "productos_nuevos", docId));
+        alert("✅ Producto eliminado.");
+        await cargarProductosAdmin();
+      } catch (e) {
+        alert("Error: " + e.message);
+      }
+    };
+
+    // Enter en password
+    document.getElementById("admin-password").addEventListener("keydown", function (e) {
       if (e.key === "Enter") window.verificarPassword();
     });
   </script>
 
+  <script src="products.js"></script>
 </body>
 </html>
