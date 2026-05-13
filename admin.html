@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Admin | Autopartes Store</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .admin-login {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0a1628;
+    }
+    .admin-login-card {
+      background: #111f38;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 48px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+    }
+    .admin-login-card h1 { color: white; font-size: 26px; margin-bottom: 8px; }
+    .admin-login-card p { color: #64748b; margin-bottom: 28px; font-size: 14px; }
+    .admin-login-card input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: white;
+      font-size: 15px;
+      outline: none;
+      margin-bottom: 16px;
+      text-align: center;
+      letter-spacing: 4px;
+    }
+    .admin-login-card input::placeholder { letter-spacing: 0; color: #475569; }
+    .admin-login-card button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .admin-panel { display: none; }
+    .admin-header {
+      background: #0a1628;
+      color: white;
+      padding: 18px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .admin-header h1 { font-size: 20px; font-weight: 800; }
+    .admin-header button {
+      background: #dc2626;
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .admin-body { padding: 32px; max-width: 1400px; margin: 0 auto; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .stat-card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 4px 18px rgba(15,23,42,0.08);
+    }
+    .stat-num { font-size: 36px; font-weight: 900; color: #ea580c; }
+    .stat-label { font-size: 14px; color: #64748b; font-weight: 600; margin-top: 4px; }
+    .admin-section { background: white; border-radius: 18px; padding: 28px; margin-bottom: 28px; box-shadow: 0 4px 18px rgba(15,23,42,0.08); }
+    .admin-section h2 { font-size: 20px; font-weight: 800; color: #0f172a; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 12px 16px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 14px 16px; border-bottom: 1px solid #f1f5f9; color: #334155; vertical-align: top; }
+    tr:hover td { background: #fafbff; }
+    .estado-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .estado-pendiente { background: #fef9c3; color: #854d0e; }
+    .estado-enviado { background: #dbeafe; color: #1e40af; }
+    .estado-entregado { background: #dcfce7; color: #166534; }
+    .estado-select {
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      font-size: 13px;
+      cursor: pointer;
+      background: white;
+    }
+    .empty-admin { text-align: center; padding: 40px; color: #94a3b8; }
+    .tabs { display: flex; gap: 10px; margin-bottom: 28px; }
+    .tab-btn {
+      padding: 10px 24px;
+      border-radius: 999px;
+      border: 2px solid #e2e8f0;
+      background: white;
+      color: #475569;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .tab-btn.active { background: #0a1628; color: white; border-color: #0a1628; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN ADMIN -->
+  <div class="admin-login" id="admin-login">
+    <div class="admin-login-card">
+      <div style="font-size:48px; margin-bottom:16px;">🔐</div>
+      <h1>Panel Administrador</h1>
+      <p>Ingresa la contraseña para acceder</p>
+      <input type="password" id="admin-password" placeholder="Contraseña" />
+      <button onclick="verificarPassword()">Entrar</button>
+      <p style="margin-top:16px; color:#475569; font-size:12px;">Solo personal autorizado</p>
+    </div>
+  </div>
+
+  <!-- PANEL ADMIN -->
+  <div class="admin-panel" id="admin-panel">
+    <div class="admin-header">
+      <h1>⚙️ Panel Administrador — Autopartes Store</h1>
+      <button onclick="cerrarAdmin()">🚪 Salir</button>
+    </div>
+
+    <div class="admin-body">
+
+      <!-- ESTADÍSTICAS -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num" id="stat-pedidos">0</div>
+          <div class="stat-label">📦 Total pedidos</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-usuarios">0</div>
+          <div class="stat-label">👥 Usuarios registrados</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-ventas">$0</div>
+          <div class="stat-label">💰 Total en ventas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-pendientes">0</div>
+          <div class="stat-label">⏳ Pedidos pendientes</div>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs">
+        <button class="tab-btn active" onclick="cambiarTab('pedidos', this)">📦 Pedidos</button>
+        <button class="tab-btn" onclick="cambiarTab('usuarios', this)">👥 Usuarios</button>
+      </div>
+
+      <!-- TAB PEDIDOS -->
+      <div class="tab-content active" id="tab-pedidos">
+        <div class="admin-section">
+          <h2>📦 Todos los pedidos</h2>
+          <div id="tabla-pedidos"><div class="empty-admin">Cargando pedidos...</div></div>
+        </div>
+      </div>
+
+      <!-- TAB USUARIOS -->
+      <div class="tab-content" id="tab-usuarios">
+        <div class="admin-section">
+          <h2>👥 Usuarios registrados</h2>
+          <div id="tabla-usuarios"><div class="empty-admin">Cargando usuarios...</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBQ-TIBlQMBo_Q5Qf6QFCKwzII3GJQ4MyI",
+      authDomain: "autopartes-store.firebaseapp.com",
+      projectId: "autopartes-store",
+      storageBucket: "autopartes-store.firebasestorage.app",
+      messagingSenderId: "98732617446",
+      appId: "1:98732617446:web:437926fe4dcbdb984c5527"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // CONTRASEÑA ADMIN
+    const PASSWORD_ADMIN = "admin2026";
+
+    window.verificarPassword = function() {
+      const input = document.getElementById("admin-password").value;
+      if (input === PASSWORD_ADMIN) {
+        document.getElementById("admin-login").style.display = "none";
+        document.getElementById("admin-panel").style.display = "block";
+        cargarDatos();
+      } else {
+        alert("❌ Contraseña incorrecta.");
+        document.getElementById("admin-password").value = "";
+      }
+    };
+
+    window.cerrarAdmin = function() {
+      window.location.href = "index.html";
+    };
+
+    window.cambiarTab = function(tab, btn) {
+      document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      document.getElementById("tab-" + tab).classList.add("active");
+      btn.classList.add("active");
+    };
+
+    function formatPrice(price) {
+      return new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(price);
+    }
+
+    function formatFecha(isoString) {
+      const fecha = new Date(isoString);
+      return fecha.toLocaleDateString("es-MX", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
+    }
+
+    async function cargarDatos() {
+      await cargarPedidos();
+      await cargarUsuarios();
+    }
+
+    async function cargarPedidos() {
+      const snapshot = await getDocs(collection(db, "compras"));
+      const pedidos = [];
+      snapshot.forEach(doc => pedidos.push({ docId: doc.id, ...doc.data() }));
+
+      // Estadísticas
+      document.getElementById("stat-pedidos").textContent = pedidos.length;
+      const totalVentas = pedidos.reduce((sum, p) => sum + (p.total || 0), 0);
+      document.getElementById("stat-ventas").textContent = formatPrice(totalVentas);
+      const pendientes = pedidos.filter(p => p.estado === "pendiente").length;
+      document.getElementById("stat-pendientes").textContent = pendientes;
+
+      if (!pedidos.length) {
+        document.getElementById("tabla-pedidos").innerHTML = `<div class="empty-admin">No hay pedidos aún.</div>`;
+        return;
+      }
+
+      // Ordenar por fecha más reciente
+      pedidos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+      let html = `<table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Productos</th>
+            <th>Dirección</th>
+            <th>Total</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>`;
+
+      pedidos.forEach(pedido => {
+        const productos = pedido.productos?.map(p => `${p.nombre} x${p.cantidad}`).join("<br>") || "—";
+        const dir = pedido.direccion;
+        const direccion = dir ? `${dir.fullname}<br>${dir.street}<br>${dir.city}, ${dir.state}` : "—";
+
+        html += `<tr>
+          <td>${formatFecha(pedido.fecha)}</td>
+          <td>${pedido.usuarioCorreo || "Invitado"}</td>
+          <td>${productos}</td>
+          <td>${direccion}</td>
+          <td><strong>${formatPrice(pedido.total || 0)}</strong></td>
+          <td>
+            <select class="estado-select" onchange="cambiarEstado('${pedido.docId}', this.value)">
+              <option value="pendiente" ${pedido.estado === "pendiente" ? "selected" : ""}>⏳ Pendiente</option>
+              <option value="enviado" ${pedido.estado === "enviado" ? "selected" : ""}>🚚 Enviado</option>
+              <option value="entregado" ${pedido.estado === "entregado" ? "selected" : ""}>✅ Entregado</option>
+            </select>
+          </td>
+        </tr>`;
+      });
+
+      html += `</tbody></table>`;
+      document.getElementById("tabla-pedidos").innerHTML = html;
+    }
+
+    async function cargarUsuarios() {
+      const snapshot = await getDocs(collection(db, "usuarios"));
+      const usuarios = [];
+      snapshot.forEach(doc => usuarios.push({ uid: doc.id, ...doc.data() }));
+
+      document.getElementById("stat-usuarios").textContent = usuarios.length;
+
+      if (!usuarios.length) {
+        document.getElementById("tabla-usuarios").innerHTML = `<div class="empty-admin">No hay usuarios registrados.</div>`;
+        return;
+      }
+
+      let html = `<table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Fecha de registro</th>
+            <th>Rol</th>
+          </tr>
+        </thead>
+        <tbody>`;
+
+      usuarios.forEach(u => {
+        html += `<tr>
+          <td>${u.nombre || "—"}</td>
+          <td>${u.correo || "—"}</td>
+          <td>${u.fechaRegistro ? formatFecha(u.fechaRegistro) : "—"}</td>
+          <td><span class="estado-badge estado-entregado">${u.rol || "cliente"}</span></td>
+        </tr>`;
+      });
+
+      html += `</tbody></table>`;
+      document.getElementById("tabla-usuarios").innerHTML = html;
+    }
+
+    window.cambiarEstado = async function(docId, nuevoEstado) {
+      try {
+        await updateDoc(doc(db, "compras", docId), { estado: nuevoEstado });
+        alert(`✅ Estado actualizado a: ${nuevoEstado}`);
+      } catch (error) {
+        alert("Error al actualizar: " + error.message);
+      }
+    };
+
+    // Enter en el input de contraseña
+    document.getElementById("admin-password").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") window.verificarPassword();
+    });
+  </script>
+
+</body>
+</html>
