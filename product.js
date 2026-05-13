@@ -11,15 +11,19 @@ function saveStoredReviews(productId, reviews) {
   localStorage.setItem(`reviews_${productId}`, JSON.stringify(reviews));
 }
 
-function starsFromRating(rating) {
-  const rounded = Math.round(rating);
-  let stars = "";
-
+function starsHTML(rating) {
+  let html = "";
   for (let i = 1; i <= 5; i++) {
-    stars += i <= rounded ? "★" : "☆";
+    html += i <= Math.round(rating) ? "★" : "☆";
   }
+  return html;
+}
 
-  return stars;
+function formatPrice(price) {
+  return new Intl.NumberFormat("es-MX", {
+    style: "currency",
+    currency: "MXN"
+  }).format(price);
 }
 
 function getCart() {
@@ -28,23 +32,22 @@ function getCart() {
 
 function saveCart(cart) {
   localStorage.setItem("cart", JSON.stringify(cart));
-  updateCartCount();
-  renderCart();
-}
-
-function updateCartCount() {
-  const cartCount = document.getElementById("cartCount");
-  if (!cartCount) return;
-
-  const cart = getCart();
-  cartCount.textContent = cart.reduce((acc, item) => acc + item.quantity, 0);
 }
 
 function addToCart(product, quantity) {
+  if (product.stock <= 0) {
+    alert("Este producto no tiene stock disponible.");
+    return;
+  }
+
   const cart = getCart();
   const existing = cart.find(item => item.id === product.id);
 
   if (existing) {
+    if (existing.quantity + quantity > product.stock) {
+      alert(`Solo hay ${product.stock} piezas disponibles.`);
+      return;
+    }
     existing.quantity += quantity;
   } else {
     cart.push({
@@ -52,50 +55,53 @@ function addToCart(product, quantity) {
       name: product.name,
       price: product.price,
       image: product.image,
+      shortDescription: product.shortDescription,
       quantity: quantity
     });
   }
 
   saveCart(cart);
-  alert("Producto agregado al carrito");
+  alert(`✅ "${product.name}" agregado al carrito.`);
 }
 
-function removeFromCart(id) {
-  const cart = getCart().filter(item => item.id !== id);
-  saveCart(cart);
+function getStockBadge(stock) {
+  if (stock <= 0) return `<span class="product-stock-badge stock-out">❌ Sin stock</span>`;
+  if (stock <= 3) return `<span class="product-stock-badge stock-low">⚠️ Últimas ${stock} piezas</span>`;
+  return `<span class="product-stock-badge stock-ok">✅ En stock — ${stock} piezas disponibles</span>`;
 }
 
-function renderCart() {
-  const cartList = document.getElementById("cartItems");
-  const totalElement = document.getElementById("cartTotal");
+function renderRelated(currentProduct) {
+  const related = PRODUCTS
+    .filter(p => p.category === currentProduct.category && p.id !== currentProduct.id)
+    .slice(0, 4);
 
-  if (!cartList || !totalElement) return;
+  if (!related.length) return "";
 
-  const cart = getCart();
-
-  if (cart.length === 0) {
-    cartList.innerHTML = `<div class="empty">Tu carrito está vacío.</div>`;
-    totalElement.textContent = "$0 MXN";
-    return;
-  }
-
-  cartList.innerHTML = cart.map(item => `
-    <div class="cart-item">
-      <img src="${item.image}" alt="${item.name}">
-      <div>
-        <h3>${item.name}</h3>
-        <p>Cantidad: ${item.quantity}</p>
-        <p>Precio unitario: $${item.price} MXN</p>
-      </div>
-      <div>
-        <p><strong>$${item.price * item.quantity} MXN</strong></p>
-        <button class="secondary-btn" onclick="removeFromCart(${item.id})">Eliminar</button>
+  const cards = related.map(p => `
+    <div class="product-card" style="cursor:pointer;" onclick="window.location.href='product.html?id=${p.id}'">
+      <img 
+        src="${p.image}" 
+        alt="${p.name}" 
+        class="product-image"
+        onerror="this.src='https://placehold.co/400x220/dde4ee/64748b?text=Sin+imagen'"
+      >
+      <div class="product-info">
+        <h3>${p.name}</h3>
+        <span class="category">${p.category}</span>
+        <p class="price">${formatPrice(p.price)}</p>
+        <div class="product-actions">
+          <a href="product.html?id=${p.id}" class="btn btn-secondary">Ver producto</a>
+        </div>
       </div>
     </div>
   `).join("");
 
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  totalElement.textContent = `$${total} MXN`;
+  return `
+    <div class="related-section">
+      <h2>🔧 Productos relacionados</h2>
+      <div class="products-grid">${cards}</div>
+    </div>
+  `;
 }
 
 function renderProduct() {
@@ -107,10 +113,11 @@ function renderProduct() {
 
   if (!product) {
     container.innerHTML = `
-      <div class="panel">
-        <h2>Producto no encontrado</h2>
-        <p>El producto que intentaste abrir no existe.</p>
-        <a class="small-btn" href="index.html">Volver al inicio</a>
+      <div style="text-align:center; padding:80px 20px; background:white; border-radius:20px; box-shadow:0 8px 28px rgba(15,23,42,0.09);">
+        <div style="font-size:56px; margin-bottom:16px;">🔍</div>
+        <h2 style="color:#0f172a; margin-bottom:10px;">Producto no encontrado</h2>
+        <p style="color:#64748b; margin-bottom:24px;">El producto que buscas no existe o fue eliminado.</p>
+        <a href="index.html" class="btn btn-secondary">← Volver al inicio</a>
       </div>
     `;
     return;
@@ -118,105 +125,183 @@ function renderProduct() {
 
   const extraReviews = getStoredReviews(productId);
   const allReviews = [...product.reviews, ...extraReviews];
+  const avgRating = allReviews.length
+    ? (allReviews.reduce((s, r) => s + r.stars, 0) / allReviews.length).toFixed(1)
+    : product.rating;
 
   container.innerHTML = `
-    <div class="product-layout">
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+      <a href="index.html">🏠 Inicio</a> ›
+      <a href="index.html">${product.category}</a> ›
+      <span>${product.name}</span>
+    </div>
+
+    <!-- PRODUCTO PRINCIPAL -->
+    <div class="product-main">
+
       <div class="product-gallery">
-        <img src="${product.image}" alt="${product.name}">
+        <span class="gallery-badge">${product.category}</span>
+        <img
+          src="${product.image}"
+          alt="${product.name}"
+          onerror="this.src='https://placehold.co/600x420/dde4ee/64748b?text=Sin+imagen'"
+        />
       </div>
 
-      <div class="product-info">
-        <div class="meta">${product.category}</div>
+      <div class="product-detail">
+        <span class="product-category-tag">${product.category}</span>
+
         <h1>${product.name}</h1>
-        <div class="stars">${starsFromRating(product.rating)} (${product.rating})</div>
-        <div class="price">$${product.price} MXN</div>
 
-        <p>${product.description}</p>
-
-        <ul class="info-list">
-          <li><strong>Medidas:</strong> ${product.measures}</li>
-          <li><strong>Compatibilidad:</strong> ${product.compatibility}</li>
-          <li><strong>Existencia:</strong> ${product.stock} piezas</li>
-        </ul>
-
-        <div class="qty">
-          <button id="minusQty" type="button">-</button>
-          <span id="qtyValue">1</span>
-          <button id="plusQty" type="button">+</button>
+        <div class="product-rating">
+          <span class="stars-display">${starsHTML(avgRating)}</span>
+          <span class="rating-num">${avgRating} / 5 &mdash; ${allReviews.length} opiniones</span>
         </div>
 
-        <div class="product-actions">
-          <button class="primary-btn" id="addCartBtn" type="button">Agregar al carrito</button>
-          <a class="secondary-btn" href="index.html">Volver al inicio</a>
+        <div class="product-price-box">
+          <div class="product-price">${formatPrice(product.price)}</div>
+          ${product.extraPriceText ? `<div class="product-extra-price">${product.extraPriceText}</div>` : ""}
         </div>
-      </div>
-    </div>
 
-    <div class="review-section" style="margin-top:28px;">
-      <h2 class="section-title" style="margin-bottom:18px;">Opiniones de compradores</h2>
+        ${getStockBadge(product.stock)}
 
-      <div class="review-grid" id="reviewList">
-        ${allReviews.map(r => `
-          <div class="review">
-            <strong>${r.name}</strong> - ${"★".repeat(r.stars)}<br>
-            ${r.comment}
+        <p class="product-description">${product.description}</p>
+
+        <div class="product-specs">
+          <div class="spec-row">
+            <span class="spec-label">📏 Medidas</span>
+            <span class="spec-value">${product.measures}</span>
           </div>
-        `).join("")}
+          <div class="spec-row">
+            <span class="spec-label">🚗 Compatibilidad</span>
+            <span class="spec-value">${product.compatibility}</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">📦 Stock</span>
+            <span class="spec-value">${product.stock} piezas disponibles</span>
+          </div>
+        </div>
+
+        <div>
+          <p style="font-size:14px; font-weight:700; color:#334155; margin-bottom:8px;">Cantidad:</p>
+          <div class="qty-selector">
+            <button class="qty-btn" id="minusQty">−</button>
+            <div class="qty-display" id="qtyValue">1</div>
+            <button class="qty-btn" id="plusQty">+</button>
+          </div>
+        </div>
+
+        <div class="product-btns">
+          <button class="btn-add-cart" id="addCartBtn" ${product.stock <= 0 ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>
+            🛒 ${product.stock <= 0 ? "Sin stock" : "Agregar al carrito"}
+          </button>
+          <a href="index.html" class="btn-back">← Volver</a>
+        </div>
+
+        <div class="trust-chips">
+          <span class="trust-chip">🚚 Envío a toda la República</span>
+          <span class="trust-chip">🔒 Compra segura</span>
+          <span class="trust-chip">🔄 Devolución 3 días</span>
+          <span class="trust-chip">✅ Calidad verificada</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RESEÑAS -->
+    <div class="reviews-section">
+      <div class="reviews-header">
+        <h2>⭐ Opiniones de compradores</h2>
+        <div class="reviews-avg">
+          <div class="avg-num">${avgRating}</div>
+          <div>
+            <div class="avg-stars">${starsHTML(avgRating)}</div>
+            <div class="avg-label">${allReviews.length} opiniones</div>
+          </div>
+        </div>
       </div>
 
-      <form class="review-form" id="reviewForm" style="margin-top:22px;">
-        <div class="panel" style="padding:0; border:none; background:transparent;">
-          <input type="text" id="reviewName" placeholder="Tu nombre" required>
-          <select id="reviewStars">
-            <option value="5">5 estrellas</option>
-            <option value="4">4 estrellas</option>
-            <option value="3">3 estrellas</option>
-            <option value="2">2 estrellas</option>
-            <option value="1">1 estrella</option>
-          </select>
-          <textarea id="reviewComment" placeholder="Escribe tu opinión del producto" required></textarea>
-          <button type="submit">Publicar reseña</button>
+      <div class="reviews-grid" id="reviewList">
+        ${allReviews.length ? allReviews.map(r => `
+          <div class="review-card">
+            <div class="review-name">👤 ${r.name}</div>
+            <div class="review-stars">${"★".repeat(r.stars)}${"☆".repeat(5 - r.stars)}</div>
+            <div class="review-comment">${r.comment}</div>
+          </div>
+        `).join("") : `<p style="color:#94a3b8; font-size:14px; padding:20px 0;">Sé el primero en opinar sobre este producto.</p>`}
+      </div>
+
+      <div class="review-form-section">
+        <h3>✍️ Escribe tu opinión</h3>
+        <div class="review-form-grid">
+          <div>
+            <label style="font-size:13px;font-weight:700;color:#475569;display:block;margin-bottom:6px;">Tu nombre</label>
+            <input type="text" id="reviewName" placeholder="Ej. Juan García" />
+          </div>
+          <div>
+            <label style="font-size:13px;font-weight:700;color:#475569;display:block;margin-bottom:6px;">Calificación</label>
+            <select id="reviewStars">
+              <option value="5">⭐⭐⭐⭐⭐ Excelente</option>
+              <option value="4">⭐⭐⭐⭐ Muy bueno</option>
+              <option value="3">⭐⭐⭐ Regular</option>
+              <option value="2">⭐⭐ Malo</option>
+              <option value="1">⭐ Muy malo</option>
+            </select>
+          </div>
+          <div class="full">
+            <label style="font-size:13px;font-weight:700;color:#475569;display:block;margin-bottom:6px;">Tu opinión</label>
+            <textarea id="reviewComment" placeholder="Cuéntanos tu experiencia con este producto..."></textarea>
+          </div>
+          <div class="full">
+            <button class="btn-review" id="submitReview">Publicar opinión</button>
+          </div>
         </div>
-      </form>
+      </div>
     </div>
+
+    <!-- RELACIONADOS -->
+    ${renderRelated(product)}
   `;
 
+  // CANTIDAD
   let qty = 1;
-  const qtyValue = document.getElementById("qtyValue");
+  const qtyDisplay = document.getElementById("qtyValue");
 
   document.getElementById("minusQty").addEventListener("click", () => {
-    if (qty > 1) qty--;
-    qtyValue.textContent = qty;
+    if (qty > 1) { qty--; qtyDisplay.textContent = qty; }
   });
 
   document.getElementById("plusQty").addEventListener("click", () => {
-    qty++;
-    qtyValue.textContent = qty;
+    if (qty < product.stock) { qty++; qtyDisplay.textContent = qty; }
   });
 
-  document.getElementById("addCartBtn").addEventListener("click", () => {
-    addToCart(product, qty);
-  });
+  // CARRITO
+  const addBtn = document.getElementById("addCartBtn");
+  if (addBtn && product.stock > 0) {
+    addBtn.addEventListener("click", () => addToCart(product, qty));
+  }
 
-  document.getElementById("reviewForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-
+  // RESEÑA
+  document.getElementById("submitReview").addEventListener("click", () => {
     const name = document.getElementById("reviewName").value.trim();
     const stars = Number(document.getElementById("reviewStars").value);
     const comment = document.getElementById("reviewComment").value.trim();
 
-    if (!name || !comment) return;
+    if (!name || !comment) {
+      alert("Por favor completa tu nombre y opinión.");
+      return;
+    }
 
     const stored = getStoredReviews(productId);
     stored.unshift({ name, stars, comment });
     saveStoredReviews(productId, stored);
-
+    alert("✅ ¡Gracias por tu opinión!");
     renderProduct();
   });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  updateCartCount();
   renderProduct();
-  renderCart();
 });
