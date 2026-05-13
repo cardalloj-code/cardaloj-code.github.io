@@ -3,64 +3,422 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detalle del producto</title>
+  <title>Producto | Autopartes Store</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    .product-page { padding: 32px; max-width: 1200px; margin: 0 auto; }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 24px;
+    }
+    .breadcrumb a { color: #64748b; text-decoration: none; }
+    .breadcrumb a:hover { color: #f59e0b; }
+    .breadcrumb span { color: #0f172a; font-weight: 600; }
+
+    .product-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      background: white;
+      border-radius: 24px;
+      padding: 36px;
+      box-shadow: 0 8px 28px rgba(15,23,42,0.09);
+      margin-bottom: 32px;
+    }
+
+    .product-gallery { position: relative; }
+    .product-gallery img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      border-radius: 18px;
+      background: #dde4ee;
+      display: block;
+    }
+    .gallery-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 999px;
+    }
+
+    .product-detail { display: flex; flex-direction: column; gap: 16px; }
+
+    .product-category-tag {
+      display: inline-block;
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      width: fit-content;
+    }
+
+    .product-detail h1 {
+      font-size: 28px;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .stars-display { color: #f59e0b; font-size: 20px; letter-spacing: 2px; }
+    .rating-num { font-size: 14px; color: #64748b; font-weight: 600; }
+
+    .product-price-box {
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid #e2e8f0;
+    }
+    .product-price {
+      font-size: 36px;
+      font-weight: 900;
+      color: #ea580c;
+      line-height: 1;
+    }
+    .product-extra-price {
+      font-size: 14px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    .product-stock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      width: fit-content;
+    }
+    .stock-ok { background: #dcfce7; color: #16a34a; }
+    .stock-low { background: #fef9c3; color: #ca8a04; }
+    .stock-out { background: #fee2e2; color: #dc2626; }
+
+    .product-description {
+      font-size: 15px;
+      color: #475569;
+      line-height: 1.8;
+    }
+
+    .product-specs {
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .spec-row {
+      display: flex;
+      padding: 12px 16px;
+      font-size: 14px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-label { font-weight: 700; color: #334155; min-width: 140px; }
+    .spec-value { color: #475569; }
+
+    .qty-selector {
+      display: flex;
+      align-items: center;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      overflow: hidden;
+      width: fit-content;
+    }
+    .qty-btn {
+      width: 42px;
+      height: 42px;
+      border: none;
+      background: #f8fafc;
+      color: #0f172a;
+      font-size: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+      font-family: inherit;
+    }
+    .qty-btn:hover { background: #e2e8f0; }
+    .qty-display {
+      width: 52px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+      border: none;
+      border-left: 1.5px solid #e2e8f0;
+      border-right: 1.5px solid #e2e8f0;
+      background: white;
+      height: 42px;
+      line-height: 42px;
+    }
+
+    .product-btns {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-add-cart {
+      flex: 1;
+      padding: 14px 24px;
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: 0.2s;
+      box-shadow: 0 6px 18px rgba(234,88,12,0.25);
+    }
+    .btn-add-cart:hover { transform: translateY(-2px); opacity: 0.95; }
+    .btn-back {
+      padding: 14px 20px;
+      background: #f1f5f9;
+      color: #0f172a;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.2s;
+    }
+    .btn-back:hover { background: #e2e8f0; }
+
+    .trust-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .trust-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 999px;
+    }
+
+    .reviews-section {
+      background: white;
+      border-radius: 24px;
+      padding: 36px;
+      box-shadow: 0 8px 28px rgba(15,23,42,0.09);
+      margin-bottom: 32px;
+    }
+    .reviews-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .reviews-header h2 { font-size: 22px; font-weight: 800; color: #0f172a; }
+    .reviews-avg {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f8fafc;
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+    .avg-num { font-size: 32px; font-weight: 900; color: #0f172a; }
+    .avg-stars { color: #f59e0b; font-size: 18px; }
+    .avg-label { font-size: 13px; color: #64748b; }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .review-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 20px;
+      transition: 0.2s;
+    }
+    .review-card:hover { border-color: #f59e0b; }
+    .review-name { font-weight: 700; color: #0f172a; margin-bottom: 4px; font-size: 15px; }
+    .review-stars { color: #f59e0b; font-size: 16px; margin-bottom: 8px; }
+    .review-comment { font-size: 14px; color: #475569; line-height: 1.6; }
+
+    .review-form-section {
+      border-top: 2px solid #f1f5f9;
+      padding-top: 28px;
+    }
+    .review-form-section h3 { font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 20px; }
+    .review-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .review-form-grid .full { grid-column: 1 / -1; }
+    .review-form-grid input,
+    .review-form-grid select,
+    .review-form-grid textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      background: #f8fafc;
+      transition: 0.2s;
+      color: #0f172a;
+      box-sizing: border-box;
+    }
+    .review-form-grid input:focus,
+    .review-form-grid select:focus,
+    .review-form-grid textarea:focus {
+      border-color: #f59e0b;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(245,158,11,0.1);
+    }
+    .review-form-grid textarea { resize: vertical; min-height: 100px; }
+    .btn-review {
+      padding: 13px 28px;
+      background: #0a1628;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: 0.2s;
+    }
+    .btn-review:hover { background: #1e293b; }
+
+    .related-section { margin-bottom: 40px; }
+    .related-section h2 { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 20px; }
+
+    @media (max-width: 900px) {
+      .product-main { grid-template-columns: 1fr; gap: 24px; }
+      .product-gallery img { height: 260px; }
+      .review-form-grid { grid-template-columns: 1fr; }
+      .review-form-grid .full { grid-column: 1; }
+      .product-page { padding: 16px; }
+    }
+  </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">🔥 AutoParts Store</div>
-
-    <div class="search-bar">
-      <input type="text" placeholder="Busca más autopartes desde el inicio">
-      <button type="button" onclick="window.location.href='index.html'">Ir al inicio</button>
+  <header class="topbar">
+    <div class="logo">⚙️ Autopartes Store</div>
+    <div class="topbar-right">
+      <div class="search-box">
+        <input type="text" placeholder="Buscar autopartes..." />
+        <button onclick="window.location.href='index.html'">🔍 Buscar</button>
+      </div>
+      <nav class="nav pro-nav">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="cart.html" class="nav-link">🛒 Carrito</a>
+        <a href="perfil.html" class="nav-link" id="nav-perfil" style="display:none">👤 Mi perfil</a>
+        <a href="login.html" class="nav-link" id="nav-sesion">Iniciar sesión</a>
+        <a href="register.html" class="nav-link nav-highlight" id="nav-registro">Registrarse</a>
+      </nav>
     </div>
-
-    <nav>
-      <a href="index.html#productos">Productos</a>
-      <a href="login.html">Iniciar sesión</a>
-      <a href="register.html">Registrarte</a>
-      <a href="address.html">Dirección</a>
-      <a href="index.html#contacto">Contacto</a>
-      <a href="cart.html">Carrito <span id="cartCount" class="cart-badge">0</span></a>
-    </nav>
   </header>
 
-  <main class="product-page">
-    <section id="productContainer"></section>
-
-    <section class="cart-section cart-panel" id="cartBox" style="margin-top:30px;">
-      <h2 class="section-title" style="margin-bottom:10px;">Tu carrito</h2>
-      <div id="cartItems"></div>
-      <div class="cart-total">Total: <span id="cartTotal">$0</span></div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="footer-grid">
-      <div>
-        <h3>Autopartes Store</h3>
-        <p>Detalles completos del producto, medidas, compatibilidad y opiniones de compradores.</p>
-      </div>
-
-      <div>
-        <h3>Contacto</h3>
-        <p>Correo: autopartesstore@gmail.com</p>
-        <p>Teléfono: 55 1234 5678</p>
-        <p>WhatsApp: 55 9876 5432</p>
-      </div>
-
-      <div>
-        <h3>Ubicación</h3>
-        <p>Ecatepec de Morelos, Estado de México</p>
-        <p>Horario: Lunes a Sábado, 9:00 am a 7:00 pm</p>
+  <main>
+    <div class="product-page" id="productContainer">
+      <div style="text-align:center; padding:80px 20px; color:#94a3b8;">
+        Cargando producto...
       </div>
     </div>
+  </main>
 
-    <div class="footer-copy">© 2026 AutoParts Store | Proyecto en GitHub Pages</div>
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <h4>⚙️ Autopartes Store</h4>
+        <p>Especialistas en refacciones y accesorios para automóviles.</p>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <p>📞 55 1234 5678</p>
+        <p>📱 WhatsApp: 55 9876 5432</p>
+        <p>✉️ autopartesstore@gmail.com</p>
+      </div>
+      <div>
+        <h4>Ubicación</h4>
+        <p>📍 Ecatepec de Morelos, Estado de México</p>
+        <p>🕐 Lunes a Sábado, 9:00 am a 7:00 pm</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Autopartes Store © 2026 — Todos los derechos reservados</p>
+    </div>
   </footer>
 
   <script src="products.js"></script>
   <script src="product.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBQ-TIBlQMBo_Q5Qf6QFCKwzII3GJQ4MyI",
+      authDomain: "autopartes-store.firebaseapp.com",
+      projectId: "autopartes-store",
+      storageBucket: "autopartes-store.firebasestorage.app",
+      messagingSenderId: "98732617446",
+      appId: "1:98732617446:web:437926fe4dcbdb984c5527"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+      const navSesion = document.getElementById("nav-sesion");
+      const navRegistro = document.getElementById("nav-registro");
+      const navPerfil = document.getElementById("nav-perfil");
+      if (user) {
+        navPerfil.style.display = "inline-flex";
+        navRegistro.style.display = "none";
+        navSesion.textContent = "🚪 Cerrar sesión";
+        navSesion.href = "#";
+        navSesion.addEventListener("click", async (e) => {
+          e.preventDefault();
+          await signOut(auth);
+          localStorage.removeItem("usuarioActivo");
+          window.location.reload();
+        });
+      }
+    });
+  </script>
+
 </body>
 </html>
