@@ -20,6 +20,7 @@
       <nav class="nav pro-nav">
         <a href="index.html" class="nav-link active">Inicio</a>
         <a href="cart.html" class="nav-link">🛒 Carrito</a>
+        <a href="perfil.html" class="nav-link" id="nav-perfil" style="display:none">👤 Mi perfil</a>
         <a href="login.html" class="nav-link" id="nav-sesion">Iniciar sesión</a>
         <a href="register.html" class="nav-link nav-highlight" id="nav-registro">Registrarse</a>
       </nav>
@@ -85,11 +86,11 @@
       <p class="section-text">Filtra por tipo de autoparte para encontrar lo que necesitas más rápido.</p>
     </div>
     <div class="categorias-grid">
-      <button class="cat-btn active" onclick="filtrarCategoria('todas')">🔧 Todas</button>
-      <button class="cat-btn" onclick="filtrarCategoria('Iluminación')">💡 Iluminación</button>
-      <button class="cat-btn" onclick="filtrarCategoria('Exterior')">🚗 Exterior</button>
-      <button class="cat-btn" onclick="filtrarCategoria('Interior')">🪑 Interior</button>
-      <button class="cat-btn" onclick="filtrarCategoria('Accesorios')">🔑 Accesorios</button>
+      <button class="cat-btn active" onclick="filtrarCategoria('todas', event)">🔧 Todas</button>
+      <button class="cat-btn" onclick="filtrarCategoria('Iluminación', event)">💡 Iluminación</button>
+      <button class="cat-btn" onclick="filtrarCategoria('Exterior', event)">🚗 Exterior</button>
+      <button class="cat-btn" onclick="filtrarCategoria('Interior', event)">🪑 Interior</button>
+      <button class="cat-btn" onclick="filtrarCategoria('Accesorios', event)">🔑 Accesorios</button>
     </div>
   </section>
 
@@ -195,6 +196,7 @@
         <p><a href="cart.html" style="color:#dce5ff; text-decoration:none;">🛒 Carrito</a></p>
         <p><a href="login.html" style="color:#dce5ff; text-decoration:none;">🔑 Iniciar sesión</a></p>
         <p><a href="register.html" style="color:#dce5ff; text-decoration:none;">📝 Registrarse</a></p>
+        <p><a href="perfil.html" style="color:#dce5ff; text-decoration:none;">👤 Mi perfil</a></p>
       </div>
       <div>
         <h4>Contacto</h4>
@@ -237,20 +239,27 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Detectar si hay sesión activa y cambiar nav
     onAuthStateChanged(auth, (user) => {
       const navSesion = document.getElementById("nav-sesion");
       const navRegistro = document.getElementById("nav-registro");
+      const navPerfil = document.getElementById("nav-perfil");
+
       if (user) {
-        navSesion.textContent = "Cerrar sesión";
-        navSesion.href = "#";
+        navPerfil.style.display = "inline-flex";
         navRegistro.style.display = "none";
+        navSesion.textContent = "🚪 Cerrar sesión";
+        navSesion.href = "#";
         navSesion.addEventListener("click", async (e) => {
           e.preventDefault();
           await signOut(auth);
           localStorage.removeItem("usuarioActivo");
           window.location.reload();
         });
+      } else {
+        navPerfil.style.display = "none";
+        navRegistro.style.display = "inline-flex";
+        navSesion.textContent = "Iniciar sesión";
+        navSesion.href = "login.html";
       }
     });
   </script>
