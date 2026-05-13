@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Perfil | Autopartes Store</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .perfil-page { padding: 40px 32px 60px; }
+    .perfil-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+    .perfil-sidebar {
+      background: white;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 4px 18px rgba(15,23,42,0.08);
+      text-align: center;
+    }
+    .perfil-avatar {
+      width: 90px;
+      height: 90px;
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin: 0 auto 16px;
+    }
+    .perfil-nombre { font-size: 20px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+    .perfil-correo { font-size: 13px; color: #64748b; margin-bottom: 20px; }
+    .perfil-menu { display: flex; flex-direction: column; gap: 6px; text-align: left; }
+    .perfil-menu-btn {
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      color: #475569;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      text-align: left;
+      transition: 0.2s;
+    }
+    .perfil-menu-btn:hover { background: #f1f5f9; color: #0f172a; }
+    .perfil-menu-btn.active { background: #0a1628; color: white; }
+    .perfil-menu-btn.danger { color: #dc2626; }
+    .perfil-menu-btn.danger:hover { background: #fee2e2; }
+    .perfil-main { display: flex; flex-direction: column; gap: 24px; }
+    .perfil-card {
+      background: white;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 4px 18px rgba(15,23,42,0.08);
+      display: none;
+    }
+    .perfil-card.active { display: block; }
+    .perfil-card h2 { font-size: 20px; font-weight: 800; color: #0f172a; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 15px;
+    }
+    .info-label { color: #64748b; font-weight: 600; }
+    .info-value { color: #0f172a; font-weight: 700; }
+    .pedido-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 16px;
+      transition: 0.2s;
+    }
+    .pedido-card:hover { border-color: #f59e0b; box-shadow: 0 4px 14px rgba(245,158,11,0.1); }
+    .pedido-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
+    .pedido-fecha { font-size: 13px; color: #64748b; }
+    .pedido-total { font-size: 18px; font-weight: 800; color: #ea580c; }
+    .pedido-productos { font-size: 14px; color: #475569; margin-bottom: 10px; line-height: 1.7; }
+    .pedido-direccion { font-size: 13px; color: #64748b; background: #f8fafc; padding: 10px 14px; border-radius: 10px; }
+    .estado-badge {
+      display: inline-block;
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .estado-pendiente { background: #fef9c3; color: #854d0e; }
+    .estado-enviado { background: #dbeafe; color: #1e40af; }
+    .estado-entregado { background: #dcfce7; color: #166534; }
+    .dir-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 20px;
+      font-size: 14px;
+      color: #475569;
+      line-height: 1.8;
+    }
+    .dir-card strong { color: #0f172a; font-size: 16px; }
+    .empty-perfil { text-align: center; padding: 40px 20px; color: #94a3b8; }
+    .empty-perfil p { font-size: 15px; margin-bottom: 16px; }
+    .no-sesion {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .no-sesion-card {
+      background: white;
+      border-radius: 20px;
+      padding: 48px;
+      box-shadow: 0 8px 28px rgba(15,23,42,0.1);
+    }
+    .no-sesion-card h2 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 10px; }
+    .no-sesion-card p { color: #64748b; margin-bottom: 24px; }
+    @media (max-width: 768px) {
+      .perfil-layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="logo">⚙️ Autopartes Store</div>
+    <div class="topbar-right">
+      <nav class="nav pro-nav">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="cart.html" class="nav-link">🛒 Carrito</a>
+        <a href="perfil.html" class="nav-link active">Mi perfil</a>
+        <a href="login.html" class="nav-link nav-highlight" id="nav-logout">Cerrar sesión</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- SI NO HAY SESIÓN -->
+  <div id="no-sesion" style="display:none;" class="perfil-page">
+    <div class="no-sesion">
+      <div class="no-sesion-card">
+        <div style="font-size:56px; margin-bottom:16px;">🔐</div>
+        <h2>Necesitas iniciar sesión</h2>
+        <p>Para ver tu perfil y pedidos debes tener una cuenta activa.</p>
+        <a href="login.html" class="pro-btn pro-btn-primary" style="margin-right:10px;">Iniciar sesión</a>
+        <a href="register.html" class="pro-btn pro-btn-light">Registrarse</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERFIL COMPLETO -->
+  <div id="perfil-contenido" style="display:none;">
+    <main class="perfil-page">
+      <div class="perfil-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="perfil-sidebar">
+          <div class="perfil-avatar">👤</div>
+          <div class="perfil-nombre" id="perfil-nombre">Cargando...</div>
+          <div class="perfil-correo" id="perfil-correo">—</div>
+          <div class="perfil-menu">
+            <button class="perfil-menu-btn active" onclick="mostrarTab('info', this)">👤 Mi cuenta</button>
+            <button class="perfil-menu-btn" onclick="mostrarTab('pedidos', this)">📦 Mis pedidos</button>
+            <button class="perfil-menu-btn" onclick="mostrarTab('direccion', this)">📍 Mi dirección</button>
+            <hr style="border:none; border-top:1px solid #f1f5f9; margin:8px 0;">
+            <button class="perfil-menu-btn danger" onclick="cerrarSesion()">🚪 Cerrar sesión</button>
+          </div>
+        </aside>
+
+        <!-- CONTENIDO -->
+        <div class="perfil-main">
+
+          <!-- MI CUENTA -->
+          <div class="perfil-card active" id="card-info">
+            <h2>👤 Información de mi cuenta</h2>
+            <div class="info-row">
+              <span class="info-label">Nombre completo</span>
+              <span class="info-value" id="info-nombre">—</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Correo electrónico</span>
+              <span class="info-value" id="info-correo">—</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Fecha de registro</span>
+              <span class="info-value" id="info-fecha">—</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Tipo de cuenta</span>
+              <span class="info-value">👤 Cliente</span>
+            </div>
+          </div>
+
+          <!-- MIS PEDIDOS -->
+          <div class="perfil-card" id="card-pedidos">
+            <h2>📦 Mis pedidos</h2>
+            <div id="lista-pedidos"><div class="empty-perfil"><p>Cargando pedidos...</p></div></div>
+          </div>
+
+          <!-- MI DIRECCIÓN -->
+          <div class="perfil-card" id="card-direccion">
+            <h2>📍 Mi dirección de envío</h2>
+            <div id="info-direccion"><div class="empty-perfil"><p>Cargando dirección...</p></div></div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBQ-TIBlQMBo_Q5Qf6QFCKwzII3GJQ4MyI",
+      authDomain: "autopartes-store.firebaseapp.com",
+      projectId: "autopartes-store",
+      storageBucket: "autopartes-store.firebasestorage.app",
+      messagingSenderId: "98732617446",
+      appId: "1:98732617446:web:437926fe4dcbdb984c5527"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    function formatPrice(price) {
+      return new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(price);
+    }
+
+    function formatFecha(isoString) {
+      return new Date(isoString).toLocaleDateString("es-MX", {
+        day: "2-digit", month: "long", year: "numeric"
+      });
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        document.getElementById("no-sesion").style.display = "block";
+        return;
+      }
+
+      document.getElementById("perfil-contenido").style.display = "block";
+
+      // Cargar datos del usuario desde Firestore
+      const userDoc = await getDoc(doc(db, "usuarios", user.uid));
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        document.getElementById("perfil-nombre").textContent = data.nombre || "Usuario";
+        document.getElementById("perfil-correo").textContent = data.correo || user.email;
+        document.getElementById("info-nombre").textContent = data.nombre || "—";
+        document.getElementById("info-correo").textContent = data.correo || user.email;
+        document.getElementById("info-fecha").textContent = data.fechaRegistro ? formatFecha(data.fechaRegistro) : "—";
+      }
+
+      // Cargar dirección
+      const dirDoc = await getDoc(doc(db, "direcciones", user.uid));
+      const dirContainer = document.getElementById("info-direccion");
+      if (dirDoc.exists()) {
+        const dir = dirDoc.data();
+        dirContainer.innerHTML = `
+          <div class="dir-card">
+            <strong>${dir.fullname}</strong><br>
+            📞 ${dir.phone}<br>
+            📍 ${dir.street}<br>
+            ${dir.neighborhood}, CP ${dir.zip}<br>
+            ${dir.city}, ${dir.state}<br>
+            ${dir.references ? `<br><em>Referencias: ${dir.references}</em>` : ""}
+          </div>
+          <a href="address.html" class="pro-btn pro-btn-light" style="margin-top:16px; display:inline-block;">✏️ Editar dirección</a>
+        `;
+      } else {
+        dirContainer.innerHTML = `
+          <div class="empty-perfil">
+            <p>No tienes una dirección guardada aún.</p>
+            <a href="address.html" class="pro-btn pro-btn-primary">Agregar dirección</a>
+          </div>
+        `;
+      }
+
+      // Cargar pedidos del usuario
+      const pedidosQuery = query(collection(db, "compras"), where("usuarioUid", "==", user.uid));
+      const pedidosSnap = await getDocs(pedidosQuery);
+      const pedidos = [];
+      pedidosSnap.forEach(d => pedidos.push({ id: d.id, ...d.data() }));
+
+      const listaPedidos = document.getElementById("lista-pedidos");
+
+      if (!pedidos.length) {
+        listaPedidos.innerHTML = `
+          <div class="empty-perfil">
+            <p>No tienes pedidos realizados aún.</p>
+            <a href="index.html" class="pro-btn pro-btn-primary">Ver productos</a>
+          </div>
+        `;
+        return;
+      }
+
+      pedidos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+      listaPedidos.innerHTML = pedidos.map(pedido => {
+        const estadoClass = `estado-${pedido.estado || "pendiente"}`;
+        const estadoTexto = pedido.estado === "enviado" ? "🚚 Enviado" : pedido.estado === "entregado" ? "✅ Entregado" : "⏳ Pendiente";
+        const productos = pedido.productos?.map(p => `${p.nombre} x${p.cantidad}`).join(", ") || "—";
+        const dir = pedido.direccion;
+        return `
+          <div class="pedido-card">
+            <div class="pedido-header">
+              <span class="pedido-fecha">📅 ${formatFecha(pedido.fecha)}</span>
+              <span class="estado-badge ${estadoClass}">${estadoTexto}</span>
+              <span class="pedido-total">${formatPrice(pedido.total || 0)}</span>
+            </div>
+            <div class="pedido-productos"><strong>Productos:</strong> ${productos}</div>
+            ${dir ? `<div class="pedido-direccion">📍 ${dir.street}, ${dir.city}, ${dir.state}</div>` : ""}
+          </div>
+        `;
+      }).join("");
+    });
+
+    window.mostrarTab = function(tab, btn) {
+      document.querySelectorAll(".perfil-card").forEach(c => c.classList.remove("active"));
+      document.querySelectorAll(".perfil-menu-btn").forEach(b => b.classList.remove("active"));
+      document.getElementById("card-" + tab).classList.add("active");
+      btn.classList.add("active");
+    };
+
+    window.cerrarSesion = async function() {
+      await signOut(auth);
+      localStorage.removeItem("usuarioActivo");
+      window.location.href = "index.html";
+    };
+  </script>
+
+</body>
+</html>
